@@ -414,7 +414,15 @@ async function ficha (clave) {
       '  [ ] NIF y CNAE, bloque de identificación',
       '  [ ] Cuentas anuales del último ejercicio depositado',
       '',
-      'Lo pido en nombre de: ',
+      // The three fields below are not a form we invented: the §4.2 of the
+      // registry terms requires the representado's "número de identificación,
+      // nombre y apellidos o razón social" in every request made on behalf of
+      // someone else. Asking here saves a round trip per order, and without
+      // them the request cannot legally be placed at all.
+      'Lo pido para (el documento se emite a su nombre):',
+      '  Razón social o nombre: ',
+      '  NIF: ',
+      '  Para qué lo necesita: ',
     ].join('\n'));
 
   $('#detail').innerHTML = `
