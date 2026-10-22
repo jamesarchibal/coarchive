@@ -199,6 +199,10 @@
     color:var(--grey);border-top:1px solid var(--hair);padding-top:13px}
   .ped .tot b{display:inline;font-family:"Archivo",sans-serif;font-size:20px;font-weight:900;
     letter-spacing:-.02em;color:var(--ink);margin:0 0 0 8px;text-transform:none}
+  /* "sin marcar" and "a presupuestar" are words, not amounts. Printed at 20px
+     bold they read as a figure, which is the one thing they are not. */
+  .ped .tot b.vacio{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;
+    letter-spacing:.06em;color:var(--grey)}
   .ped .err{color:var(--magenta-deep);font-size:14px;font-weight:600}
   .ok b{color:var(--ink)}
   .ok .ref{font-family:"JetBrains Mono",monospace;font-size:19px;font-weight:700;letter-spacing:.06em;color:var(--magenta)}
@@ -497,7 +501,7 @@ async function ficha (clave) {
             <textarea name="motivo"></textarea></label>
         </fieldset>
 
-        <p class="tot">Total con IVA <b id="tot">sin marcar</b></p>
+        <p class="tot">Total con IVA <b id="tot" class="vacio">sin marcar</b></p>
         <p class="err" id="err" hidden></p>
         <button class="solidbtn" type="submit" id="enviar">Enviar la petición</button>
         <p>Primero cobramos, después pedimos. Te llega el importe exacto a ese correo y el
@@ -534,9 +538,11 @@ function formulario (clave) {
   // arrives from a browser is a price the buyer chose.
   const total = () => {
     const ids = marcadas().map(cat);
+    const cifra = ids.length && ids.every((c) => c.precio_cent !== null);
     tot.textContent = !ids.length ? 'sin marcar'
-      : ids.some((c) => c.precio_cent === null) ? 'a presupuestar'
+      : !cifra ? 'a presupuestar'
       : eur(ids.reduce((n, c) => n + c.precio_cent, 0));
+    tot.className = cifra ? '' : 'vacio';
   };
 
   $('#abrir').addEventListener('click', () => {
