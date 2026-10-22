@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coarchive · base libre de empresas españolas</title>
+<link rel="icon" href="{{FAVICON}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7;
+    --ink:#111114;
+    --grey:#6c6c74;
+    --hair:#d9d6cf;
+    --magenta:#FF009B;
+    --magenta-deep:#C8007C;
+    --nav:64px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.5;min-height:100dvh;display:flex;flex-direction:column}
+  .mono{font-family:"JetBrains Mono",monospace}
+  em{font-style:normal;color:var(--magenta)}
+  a{color:inherit;text-decoration:none}
+  button,input,select{font-family:inherit}
+
+  /* NAV */
+  nav{height:var(--nav);flex:0 0 var(--nav);display:flex;position:sticky;top:0;z-index:50;background:var(--paper)}
+  .nav-inner{position:relative;flex:1;display:flex;align-items:center;justify-content:space-between;
+    padding:0 32px;width:100%;max-width:var(--maxw);margin-inline:auto}
+  .nav-inner::after{content:"";position:absolute;left:32px;right:32px;bottom:0;height:1px;background:var(--hair)}
+  .nav-left{display:flex;align-items:center;gap:22px}
+  .brand{display:flex;align-items:center;gap:8px}
+  .brand img{height:22px;width:auto;display:block}
+  .nav-tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--grey);padding-left:22px;border-left:1px solid var(--hair)}
+  @media(max-width:860px){.nav-tag{display:none}}
+  .ghostbtn{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.06em;
+    color:var(--grey);background:transparent;border:1px solid var(--hair);border-radius:2px;padding:8px 10px;
+    line-height:1;cursor:pointer;transition:.18s;white-space:nowrap}
+  .ghostbtn:hover{color:var(--ink);border-color:var(--ink)}
+  /* The nav ran out of room before it ran out of links: the right-hand button
+     was clipped by the viewport. Three things give way in order, because the
+     wordmark alone is 141px and at 298px there is nothing else to cut: the
+     index link goes first (it is in the footer too), then the long label, then
+     the wordmark shrinks. Measured at 298px, which is narrower than any phone. */
+  .lbl-short{display:none}
+  @media(max-width:620px){
+    .nav-left .ghostbtn{display:none}
+    .nav-inner{padding:0 18px}
+    .nav-inner::after{left:18px;right:18px}
+  }
+  @media(max-width:460px){
+    .lbl-long{display:none}
+    .lbl-short{display:inline}
+    .brand img{height:18px}
+    .nav-left{gap:14px}
+  }
+  .solidbtn{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--ink);border:1px solid var(--ink);
+    border-radius:2px;padding:12px 16px;line-height:1;cursor:pointer;transition:.18s}
+  .solidbtn:hover{background:var(--magenta);border-color:var(--magenta)}
+
+  /* LAYOUT */
+  main{flex:1;width:100%;max-width:var(--maxw);margin-inline:auto;padding:0 32px 90px}
+
+  /* HERO */
+  .hero{padding:52px 0 32px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--grey);display:inline-flex;align-items:center;gap:11px;margin-bottom:20px}
+  .eyebrow .bar{width:28px;height:1px;background:var(--ink)}
+  h1{font-size:clamp(32px,4.4vw,58px);font-weight:800;line-height:1.02;letter-spacing:-.035em;max-width:20ch}
+  .hero-sub{margin-top:20px;max-width:60ch;font-size:clamp(15px,1.3vw,18.5px);color:var(--grey)}
+  .hero-meta{margin-top:28px;display:flex;flex-wrap:wrap;gap:26px}
+  .hm{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+  .hm b{display:block;font-family:"Archivo",sans-serif;font-size:19px;font-weight:900;letter-spacing:-.02em;color:var(--ink);margin-bottom:3px}
+  .hm b em{color:var(--magenta)}
+
+  /* SEARCH */
+  .search{margin-top:34px;border-top:1px solid var(--hair);padding-top:26px}
+  .searchrow{display:flex;gap:10px;flex-wrap:wrap}
+  #q{flex:1;min-width:260px;font-size:17px;font-weight:500;padding:15px 16px;border:1px solid var(--ink);
+    border-radius:2px;background:#fff;color:var(--ink);outline:none}
+  #q::placeholder{color:#a5a29c;font-weight:400}
+  #q:focus{border-color:var(--magenta);box-shadow:0 0 0 3px rgba(255,0,155,.1)}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  select{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.04em;
+    color:var(--ink);background:#fff;border:1px solid var(--hair);border-radius:2px;padding:9px 10px;cursor:pointer}
+  select:focus{outline:none;border-color:var(--ink)}
+  .count{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--grey);margin-left:auto;align-self:center}
+
+  /* EXAMPLES. The base is only obvious once you have seen one question it
+     answers, so the page hands over five. */
+  .chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .chips-k{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--grey);margin-right:4px}
+  .chip{font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--hair);
+    border-radius:100px;padding:6px 13px;cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--magenta);color:var(--magenta)}
+
+  /* RESULTS */
+  .listbar{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between}
+  .listbar h2{font-size:15px;font-weight:800;letter-spacing:-.01em}
+  .listbar span{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--grey)}
+  .rows{margin-top:12px;border-top:1px solid var(--hair)}
+  .row{display:grid;grid-template-columns:1fr 132px 64px 72px;gap:18px;align-items:baseline;
+    padding:15px 2px;border-bottom:1px solid var(--hair);cursor:pointer;transition:.12s}
+  .row:hover{background:#fff}
+  /* A grid child is min-width:auto by default, so the nowrap objeto refused to
+     shrink and pushed the date column 178px past a 375px screen. */
+  .row > div{min-width:0}
+  .row .nm{font-weight:700;letter-spacing:-.015em;font-size:15.5px}
+  .row:hover .nm{color:var(--magenta)}
+  .row .ob{display:block;font-weight:400;font-size:12.5px;color:var(--grey);margin-top:3px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:62ch}
+  .row .ev{display:block;margin-top:5px;font-family:"JetBrains Mono",monospace;font-size:9.5px;
+    font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--magenta-deep);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .mt{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;color:var(--grey)}
+  .row .num{text-align:right}
+  @media(max-width:760px){
+    .row{grid-template-columns:1fr auto;gap:6px}
+    .row .mt.hide-s{display:none}
+  }
+  .tagx{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;padding:2px 5px;border-radius:2px;margin-left:7px;vertical-align:1px}
+  .tagx.ext{background:var(--ink);color:#fff}
+  .tagx.con{background:var(--magenta);color:#fff}
+  .more{margin:26px auto 0;display:block}
+  .more[hidden]{display:none}
+  .empty{padding:60px 0;color:var(--grey);text-align:center}
+
+  /* DETAIL */
+  .back{margin:8px 0 22px}
+  .d-head{border-bottom:1px solid var(--hair);padding-bottom:22px}
+  .d-head h2{font-size:clamp(26px,3.2vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+  .d-key{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--grey);margin-top:10px}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--hair);
+    border:1px solid var(--hair);margin-top:26px}
+  .fact{background:var(--paper);padding:15px 16px}
+  .fact dt{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+  .fact dd{font-size:15px;font-weight:700;letter-spacing:-.01em;margin-top:5px;word-break:break-word}
+  .missing{margin-top:12px;font-size:13px;color:var(--grey);max-width:78ch}
+  /* A field the register sells is not the same as a field nobody has: it reads
+     as an offer, not as a hole. */
+  .fact.ask{background:#fff}
+  .fact.ask dd{font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:700;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--magenta)}
+  .objeto{margin-top:26px;max-width:80ch;color:var(--grey);font-size:15px}
+  .objeto b{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--grey);margin-bottom:7px}
+  .objeto span{color:var(--ink)}
+
+  h3.sec{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--grey);margin:44px 0 14px;padding-top:18px;border-top:1px solid var(--hair)}
+  .acto{padding:14px 0;border-bottom:1px solid var(--hair);display:grid;grid-template-columns:96px 1fr;gap:18px}
+  .acto .f{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--grey);letter-spacing:.04em}
+  .acto .labs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+  .lab{font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:600;letter-spacing:.05em;
+    border:1px solid var(--hair);border-radius:2px;padding:2px 6px;color:var(--ink);background:#fff}
+  .acto .tx{font-size:13.5px;color:var(--grey);line-height:1.55}
+  @media(max-width:700px){.acto{grid-template-columns:1fr;gap:5px}}
+
+  /* MISSING BLOCK */
+  .gap{margin-top:46px;border:1px solid var(--ink);padding:24px 26px;background:#fff}
+  .gap b{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--magenta);display:block;margin-bottom:10px}
+  .gap p{font-size:14.5px;color:var(--grey);max-width:74ch}
+  .gap p + p{margin-top:9px}
+  .gap .price{font-family:"JetBrains Mono",monospace;color:var(--ink);font-weight:700}
+  .gap .solidbtn{margin-top:18px}
+
+  footer{border-top:1px solid var(--hair);padding:22px 32px;max-width:var(--maxw);margin:0 auto;width:100%}
+  footer p{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+  footer a{color:var(--magenta)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a class="brand" href="/"><img alt="JobLanders" src="{{WORDMARK}}"></a>
+      <span class="nav-tag">Coarchive</span>
+      <!-- Absolute, not /index: this page is also served from its own Vercel host,
+           where a root-relative link would land on nothing. -->
+      <a class="ghostbtn" href="https://www.joblanders.ai/index">&larr; Índice</a>
+    </div>
+    <a class="ghostbtn" href="https://www.joblanders.ai/mercantil"><span class="lbl-long">Por qué existe esto</span><span class="lbl-short">Por qué</span></a>
+  </div>
+</nav>
+
+<main>
+  <!-- LISTA -->
+  <section id="pane-list">
+    <div class="hero">
+      <div class="eyebrow"><span class="bar"></span>Base libre · fuente BORME</div>
+      <h1>Las empresas españolas que <em>se han movido</em>.</h1>
+      <p class="hero-sub">
+        Busca por nombre o por lo que hace una empresa, y mira qué se le ha inscrito: constitución,
+        cambio de administrador, ampliación de capital, concurso, extinción.
+      </p>
+      <div class="hero-meta" id="meta"></div>
+    </div>
+
+    <div class="search">
+      <div class="searchrow">
+        <input id="q" type="search" autocomplete="off" spellcheck="false"
+               placeholder="Nombre de empresa, o una palabra del objeto social">
+      </div>
+      <div class="chips" id="chips">
+        <span class="chips-k">Por ejemplo</span>
+        <button class="chip" data-q="inteligencia artificial">inteligencia artificial</button>
+        <button class="chip" data-q="residencia de mayores">residencias de mayores</button>
+        <button class="chip" data-q="instalaciones fotovoltaicas">fotovoltaica</button>
+        <button class="chip" data-q="ciberseguridad">ciberseguridad</button>
+        <button class="chip" data-estado="concurso">en concurso</button>
+      </div>
+      <div class="filters">
+        <select id="provincia"><option value="">Todas las provincias</option></select>
+        <select id="forma"><option value="">Toda forma jurídica</option></select>
+        <select id="estado">
+          <option value="">Cualquier estado</option>
+          <option value="activa">Activa</option>
+          <option value="concurso">En concurso</option>
+          <option value="extinguida">Extinguida</option>
+        </select>
+        <button class="ghostbtn" id="limpiar" hidden>Limpiar</button>
+      </div>
+    </div>
+
+    <div class="listbar">
+      <h2 id="listtitle"></h2>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="rows" id="rows"></div>
+    <button class="ghostbtn more" id="more" hidden>Ver más</button>
+  </section>
+
+  <!-- FICHA -->
+  <section id="pane-detail" hidden>
+    <button class="ghostbtn back" id="back">&larr; Volver</button>
+    <div id="detail"></div>
+  </section>
+</main>
+
+<footer>
+  <p>Fuente: BORME, sección A, datos abiertos del BOE &middot;
+     Los nombres de personas físicas se eliminan al cargar, los de empresas se conservan &middot;
+     <a href="https://www.joblanders.ai/mercantil">joblanders.ai/mercantil</a></p>
+</footer>
+
+<script>
+const RESUMEN = {{RESUMEN}};
+
+// The page is at / in development and at /coarchive on joblanders.ai, where a
+// Vercel rewrite puts it. There are no sub-routes, so wherever the page was
+// loaded from IS the base, and the endpoints hang off it. An absolute /api
+// would hit the joblanders.ai root instead of this app.
+const API = (location.pathname.replace(/\/+$/, '')) + '/api';
+
+const $ = (s) => document.querySelector(s);
+const nf = new Intl.NumberFormat('es-ES');
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fecha = (d) => d ? d.split('-').reverse().join('.') : null;
+
+// hero numbers are counted by the database, never typed in
+$('#meta').innerHTML = [
+  ['empresas', nf.format(RESUMEN.empresas)],
+  ['actos inscritos', nf.format(RESUMEN.actos)],
+  ['provincias', RESUMEN.provincias],
+  ['periodo', fecha(RESUMEN.desde) + ' a ' + fecha(RESUMEN.hasta)],
+  ['coste de la fuente', '<em>0 €</em>'],
+].map(([k, v]) => `<div class="hm"><b>${v}</b>${k}</div>`).join('');
+
+// Both selects are built from the counted data, so an option can never offer a
+// filter that returns nothing.
+$('#provincia').insertAdjacentHTML('beforeend', RESUMEN.listaProvincias
+  .map((p) => `<option value="${esc(p.p)}">${esc(p.p)} (${nf.format(p.n)})</option>`).join(''));
+
+$('#forma').insertAdjacentHTML('beforeend', RESUMEN.listaFormas
+  .map((f) => `<option value="${esc(f.f)}">${esc(f.f)} (${nf.format(f.n)})</option>`).join(''));
+
+let page = 1, pending = null;
+const FILTROS = ['provincia', 'forma', 'estado'];
+
+// Has the visitor asked anything yet? The answer changes what the count can
+// honestly say, because the API caps its COUNT at 5001 and "más de 5.000
+// empresas" on an empty search is both true and useless when the real number
+// is baked into the page.
+const preguntando = () => Boolean($('#q').value.trim() || FILTROS.some((k) => $('#' + k).value));
+
+function params () {
+  const u = new URLSearchParams();
+  u.set('q', $('#q').value.trim());
+  for (const k of FILTROS) if ($('#' + k).value) u.set(k, $('#' + k).value);
+  u.set('page', page);
+  return u;
+}
+
+async function buscar (append) {
+  const u = params();
+  if (pending) pending.abort();
+  pending = new AbortController();
+  let data;
+  try { data = await (await fetch(API + '/buscar?' + u, { signal: pending.signal })).json(); }
+  catch (e) { return; }
+
+  const pide = preguntando();
+  $('#limpiar').hidden = !pide;
+  $('#listtitle').textContent = pide ? 'Resultados' : 'Lo último que se ha inscrito';
+  $('#count').textContent = pide
+    ? (data.total
+        ? (data.capped ? 'más de 5.000 empresas' : nf.format(data.total) + (data.total === 1 ? ' empresa' : ' empresas'))
+        : 'sin resultados')
+    : nf.format(RESUMEN.empresas) + ' empresas en la base';
+
+  // The row says WHAT moved, not just when. "Hoja B-123456" used to sit here
+  // and it is the registry's internal key: it means nothing to a reader and it
+  // is on the ficha anyway.
+  const html = data.rows.map((r) => `
+    <div class="row" data-clave="${esc(r.clave)}">
+      <div>
+        <span class="nm">${esc(r.nombre)}${
+          r.estado === 'extinguida' ? '<span class="tagx ext">extinguida</span>' :
+          r.estado === 'concurso' ? '<span class="tagx con">concurso</span>' : ''}</span>
+        ${r.objeto ? `<span class="ob">${esc(r.objeto)}</span>` : ''}
+        ${r.ultimas.length ? `<span class="ev">${r.ultimas.slice(0, 4).map(esc).join(' &middot; ')}</span>` : ''}
+      </div>
+      <div class="mt hide-s">${esc(r.provincia)}</div>
+      <div class="mt hide-s">${esc(r.forma || '')}</div>
+      <div class="mt num">${fecha(r.ultimo_acto)}</div>
+    </div>`).join('');
+
+  if (append) $('#rows').insertAdjacentHTML('beforeend', html);
+  else $('#rows').innerHTML = html || '<p class="empty">Nada con esos criterios.</p>';
+  $('#more').hidden = data.rows.length < 40;
+}
+
+function reset () { page = 1; buscar(false); }
+
+let t;
+$('#q').addEventListener('input', () => { clearTimeout(t); t = setTimeout(reset, 180); });
+for (const k of FILTROS) $('#' + k).addEventListener('change', reset);
+$('#more').addEventListener('click', () => { page++; buscar(true); });
+
+// An example chip sets the whole query, filters included, so it can show a
+// combination the filter bar alone would take three clicks to reach.
+$('#chips').addEventListener('click', (e) => {
+  const c = e.target.closest('.chip');
+  if (!c) return;
+  $('#q').value = c.dataset.q || '';
+  for (const k of FILTROS) $('#' + k).value = c.dataset[k] || '';
+  reset();
+});
+
+$('#limpiar').addEventListener('click', () => {
+  $('#q').value = '';
+  for (const k of FILTROS) $('#' + k).value = '';
+  reset();
+});
+
+$('#rows').addEventListener('click', (e) => {
+  const row = e.target.closest('.row');
+  if (row) ficha(row.dataset.clave);
+});
+
+$('#back').addEventListener('click', () => {
+  $('#pane-detail').hidden = true;
+  $('#pane-list').hidden = false;
+  history.replaceState(null, '', '/');
+});
+
+async function ficha (clave) {
+  const e = await (await fetch(API + '/empresa?clave=' + encodeURIComponent(clave))).json();
+  const fact = (k, v) => `<div class="fact"><dt>${k}</dt><dd>${esc(v)}</dd></div>`;
+
+  // An empty field is not printed as a row of "no publicado". For a company
+  // that existed before the loaded period, all six are empty, and six empty
+  // cells read as a broken page instead of as the honest shape of a bulletin
+  // that only ever publishes what was inscribed. So: print what there is, and
+  // name what is missing once, underneath.
+  // Third element is how the field is named inside a sentence. Lowercasing the
+  // label instead turned "Publicada en BORME" into "publicada en borme".
+  const CAMPOS = [
+    ['Forma jurídica', e.forma, 'la forma jurídica'],
+    ['Constitución', fecha(e.comienzo), 'la fecha de constitución'],
+    ['Publicada en BORME', fecha(e.constitucion), 'la fecha de publicación en el BORME'],
+    ['CNAE', e.cnae, 'el CNAE'],
+    ['Capital', e.capital, 'el capital'],
+    ['Domicilio', e.domicilio, 'el domicilio'],
+  ];
+  const hay = CAMPOS.filter(([, v]) => v);
+  const faltan = CAMPOS.filter(([, v]) => !v).map(([, , frase]) => frase);
+
+  // A mailto and not a form: this app is two read-only endpoints and a static
+  // page, and a request for a paid document from the register needs a person
+  // to answer it. The company is prefilled because the registry key, not the
+  // name, is what identifies it when we go and buy the document.
+  const pedir = 'mailto:james@joblanders.com'
+    + '?subject=' + encodeURIComponent('Coarchive · NIF y cuentas de ' + e.nombre)
+    + '&body=' + encodeURIComponent([
+      'Empresa: ' + e.nombre,
+      'Provincia: ' + e.provincia,
+      'Hoja: ' + e.hoja,
+      '',
+      'Necesito (marca lo que quieras):',
+      '  [ ] NIF y CNAE, bloque de identificación',
+      '  [ ] Cuentas anuales del último ejercicio depositado',
+      '',
+      'Lo pido en nombre de: ',
+    ].join('\n'));
+
+  $('#detail').innerHTML = `
+    <div class="d-head">
+      <h2>${esc(e.nombre)}</h2>
+      <div class="d-key">${esc(e.provincia)} &middot; hoja ${esc(e.hoja)} &middot;
+        ${e.n_actos} ${e.n_actos === 1 ? 'acto inscrito' : 'actos inscritos'} &middot;
+        ${e.estado === 'activa' ? 'sin acto de extinción' : esc(e.estado)}</div>
+    </div>
+
+    <dl class="facts">
+      ${hay.map(([k, v]) => fact(k, v)).join('')}
+      <div class="fact ask"><dt>NIF</dt><dd>a petición</dd></div>
+      <div class="fact ask"><dt>Cuentas anuales</dt><dd>a petición</dd></div>
+    </dl>
+    ${faltan.length ? `<p class="missing">El BORME publica un dato solo dentro del acto que lo
+      contiene, y lo que no se ha vuelto a inscribir no vuelve a salir. Aquí no consta
+      ${faltan.map(esc).join(', ').replace(/, ([^,]*)$/, faltan.length > 1 ? ' y $1' : '$1')}.</p>` : ''}
+
+    ${e.objeto ? `<div class="objeto"><b>Objeto social</b><span>${esc(e.objeto)}</span></div>` : ''}
+
+    <div class="gap">
+      <b>Los dos campos que el BORME no trae</b>
+      <p>El NIF y las cuentas anuales no se publican en el boletín: solo están en el Registro
+        Mercantil y se pagan por consulta. <span class="price">2,98 €</span> el bloque de
+        identificación, que trae NIF y CNAE, y <span class="price">8,99 €</span> el depósito de
+        cuentas completo, los dos antes de IVA (medido el 21 de octubre de 2026).</p>
+      <p>No guardamos ninguno de los dos. Se piden en el momento, por cuenta del cliente que los
+        necesita, y se le entregan a él. La entrega tarda minutos.</p>
+      <a class="solidbtn" href="${pedir}">Pedir el NIF y las cuentas</a>
+    </div>
+
+    <h3 class="sec">Actos inscritos</h3>
+    ${e.actos.map((a) => `
+      <div class="acto">
+        <div class="f">${fecha(a.fecha)}</div>
+        <div>
+          ${a.etiquetas.length ? `<div class="labs">${a.etiquetas.slice(0, 8).map((l) => `<span class="lab">${esc(l)}</span>`).join('')}</div>` : ''}
+          <div class="tx">${esc(a.texto)}</div>
+        </div>
+      </div>`).join('')}
+  `;
+  $('#pane-list').hidden = true;
+  $('#pane-detail').hidden = false;
+  window.scrollTo(0, 0);
+}
+
+buscar(false);
+</script>
+</body>
+</html>

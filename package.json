@@ -1,0 +1,12 @@
+{
+  "name": "mercantil",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node serve.mjs",
+    "publish:page": "node publish.mjs"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.15.9"
+  }
+}

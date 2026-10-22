@@ -1,0 +1,4 @@
+.vercel
+node_modules
+* 2.*
+* 3.*
