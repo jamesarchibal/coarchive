@@ -7,6 +7,9 @@
 //                             stays in one place
 //   {{RESUMEN}}               counted by the database, so the hero numbers
 //                             cannot drift from the data
+//   {{CATALOGO}}              the products and their prices, straight from
+//                             pedidos.mjs, so the price shown and the price
+//                             charged are the same number
 //
 // serve.mjs imports plantilla() from here, so local development and the
 // published page are built by the same code.
@@ -17,6 +20,7 @@ import { fileURLToPath } from 'node:url'
 import os from 'node:os'
 import path from 'node:path'
 
+import { CATALOGO } from './pedidos.mjs'
 import { resumen } from './queries.mjs'
 
 // fileURLToPath, never new URL(...).pathname: the latter keeps the %20 of
@@ -47,6 +51,7 @@ export async function plantilla (db) {
     .replace('{{WORDMARK}}', wordmark)
     .replace('{{FAVICON}}', favicon)
     .replace('{{RESUMEN}}', JSON.stringify(r))
+    .replace('{{CATALOGO}}', JSON.stringify(CATALOGO))
   if (html.includes('{{')) throw new Error('a placeholder was left unfilled')
   return { html, resumen: r }
 }

@@ -19,10 +19,21 @@
 import { createServer } from 'node:http'
 
 import { buscar, empresa } from './queries.mjs'
+import { crear, pedidosClient } from './pedidos.mjs'
 import { localClient, plantilla } from './publish.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 8806
 const db = localClient()
+const pedidos = pedidosClient()
+
+const cuerpo = (req) => new Promise((resolve, reject) => {
+  let s = ''
+  // 64 kB is far more than the form can hold and stops a stuck request from
+  // eating memory.
+  req.on('data', (c) => { s += c; if (s.length > 65536) reject(new Error('cuerpo demasiado grande')) })
+  req.on('end', () => { try { resolve(JSON.parse(s || '{}')) } catch (e) { reject(e) } })
+  req.on('error', reject)
+})
 
 const json = (res, data) => {
   res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' })
@@ -33,6 +44,19 @@ createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`)
   const p = url.searchParams
   try {
+    // The one endpoint that writes. It mirrors api/pedir.js, including the 400
+    // for what the person can fix, so a form that works here works deployed.
+    if (url.pathname === '/api/pedir') {
+      if (req.method !== 'POST') { res.writeHead(405); return res.end('usa POST') }
+      try {
+        const p = await crear(pedidos, db, await cuerpo(req))
+        return json(res, { id: p.id, empresa: p.empresa, precio_cent: p.precio_cent, presupuestar: p.presupuestar })
+      } catch (err) {
+        if (!err?.cliente) throw err
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' })
+        return res.end(JSON.stringify({ error: err.message }))
+      }
+    }
     if (url.pathname === '/api/buscar') {
       return json(res, await buscar(db, {
         q: p.get('q') || '',
