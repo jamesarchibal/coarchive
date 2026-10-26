@@ -1,6 +1,13 @@
 .vercel
 node_modules
 
+# This project reads eight secrets from the environment (the two Turso pairs,
+# Resend, and the COARCHIVE_* settings) and ships none of them. The obvious way
+# to fill them in a fresh clone is "vercel env pull .env.local", so the rule has
+# to exist BEFORE anyone does that.
+.env
+.env.*
+
 # Google Drive copies. When Drive loses a race with the editor it empties the
 # real file and parks the content in a numbered twin. The number is not always
 # 2: "package-lock 4.json" and ".vercelignore 2" are both here today, and the
