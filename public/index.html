@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coarchive · base libre de empresas españolas</title>
+<link rel="icon" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF7;
+    --ink:#111114;
+    --grey:#6c6c74;
+    --hair:#d9d6cf;
+    --magenta:#FF009B;
+    --magenta-deep:#C8007C;
+    --nav:64px;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.5;min-height:100dvh;display:flex;flex-direction:column}
+  .mono{font-family:"JetBrains Mono",monospace}
+  em{font-style:normal;color:var(--magenta)}
+  a{color:inherit;text-decoration:none}
+  button,input,select{font-family:inherit}
+
+  /* NAV */
+  nav{height:var(--nav);flex:0 0 var(--nav);display:flex;position:sticky;top:0;z-index:50;background:var(--paper)}
+  .nav-inner{position:relative;flex:1;display:flex;align-items:center;justify-content:space-between;
+    padding:0 32px;width:100%;max-width:var(--maxw);margin-inline:auto}
+  .nav-inner::after{content:"";position:absolute;left:32px;right:32px;bottom:0;height:1px;background:var(--hair)}
+  .nav-left{display:flex;align-items:center;gap:22px}
+  /* A separate class from .nav-left and not a reuse of it: the 620px rule below
+     hides .nav-left .ghostbtn to drop the index link, and these two have to
+     survive that. */
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-right .ghostbtn[hidden]{display:none}
+  .brand{display:flex;align-items:center;gap:8px}
+  .brand img{height:22px;width:auto;display:block}
+  .nav-tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--grey);padding-left:22px;border-left:1px solid var(--hair)}
+  @media(max-width:860px){.nav-tag{display:none}}
+  .ghostbtn{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.06em;
+    color:var(--grey);background:transparent;border:1px solid var(--hair);border-radius:2px;padding:8px 10px;
+    line-height:1;cursor:pointer;transition:.18s;white-space:nowrap}
+  .ghostbtn:hover{color:var(--ink);border-color:var(--ink)}
+  /* The nav ran out of room before it ran out of links: the right-hand button
+     was clipped by the viewport. Three things give way in order, because the
+     wordmark alone is 141px and at 298px there is nothing else to cut: the
+     index link goes first (it is in the footer too), then the long label, then
+     the wordmark shrinks. Measured at 298px, which is narrower than any phone. */
+  .lbl-short{display:none}
+  @media(max-width:620px){
+    .nav-left .ghostbtn{display:none}
+    .nav-inner{padding:0 18px}
+    .nav-inner::after{left:18px;right:18px}
+  }
+  @media(max-width:460px){
+    .lbl-long{display:none}
+    .lbl-short{display:inline}
+    .brand img{height:18px}
+    .nav-left{gap:14px}
+  }
+  .solidbtn{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:700;
+    letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--ink);border:1px solid var(--ink);
+    border-radius:2px;padding:12px 16px;line-height:1;cursor:pointer;transition:.18s}
+  .solidbtn:hover{background:var(--magenta);border-color:var(--magenta)}
+
+  /* LAYOUT */
+  main{flex:1;width:100%;max-width:var(--maxw);margin-inline:auto;padding:0 32px 90px}
+
+  /* HERO */
+  .hero{padding:52px 0 32px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--grey);display:inline-flex;align-items:center;gap:11px;margin-bottom:20px}
+  .eyebrow .bar{width:28px;height:1px;background:var(--ink)}
+  h1{font-size:clamp(32px,4.4vw,58px);font-weight:800;line-height:1.02;letter-spacing:-.035em;max-width:20ch}
+  .hero-sub{margin-top:20px;max-width:60ch;font-size:clamp(15px,1.3vw,18.5px);color:var(--grey)}
+  .hero-meta{margin-top:28px;display:flex;flex-wrap:wrap;gap:26px}
+  .hm{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey)}
+  .hm b{display:block;font-family:"Archivo",sans-serif;font-size:19px;font-weight:900;letter-spacing:-.02em;color:var(--ink);margin-bottom:3px}
+  .hm b em{color:var(--magenta)}
+
+  /* SEARCH */
+  .search{margin-top:34px;border-top:1px solid var(--hair);padding-top:26px}
+  .searchrow{display:flex;gap:10px;flex-wrap:wrap}
+  #q{flex:1;min-width:260px;font-size:17px;font-weight:500;padding:15px 16px;border:1px solid var(--ink);
+    border-radius:2px;background:#fff;color:var(--ink);outline:none}
+  #q::placeholder{color:#a5a29c;font-weight:400}
+  #q:focus{border-color:var(--magenta);box-shadow:0 0 0 3px rgba(255,0,155,.1)}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  /* max-width is load bearing on a phone. A select is as wide as its longest
+     option, and "Suministro de energía eléctrica, gas, vapor y aire
+     acondicionado (538)" makes the sector one 535 px, which pushed the whole
+     page sideways at 375 px. Measured 2026-10-22. */
+  select{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.04em;
+    color:var(--ink);background:#fff;border:1px solid var(--hair);border-radius:2px;padding:9px 10px;
+    cursor:pointer;max-width:100%}
+  select:focus{outline:none;border-color:var(--ink)}
+  .count{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--grey);margin-left:auto;align-self:center}
+  .cov{margin-top:9px;font-size:12.5px;color:var(--grey);max-width:86ch}
+  .cov b{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--ink)}
+
+  /* EXAMPLES. The base is only obvious once you have seen one question it
+     answers, so the page hands over five. */
+  .chips{margin-top:14px;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .chips-k{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--grey);margin-right:4px}
+  .chip{font-size:13px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--hair);
+    border-radius:100px;padding:6px 13px;cursor:pointer;transition:.15s}
+  .chip:hover{border-color:var(--magenta);color:var(--magenta)}
+
+  /* RESULTS */
+  .listbar{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between}
+  .listbar h2{font-size:15px;font-weight:800;letter-spacing:-.01em}
+  .listbar span{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--grey)}
+  .rows{margin-top:12px;border-top:1px solid var(--hair)}
+  .row{display:grid;grid-template-columns:1fr 132px 64px 72px;gap:18px;align-items:baseline;
+    padding:15px 2px;border-bottom:1px solid var(--hair);cursor:pointer;transition:.12s}
+  .row:hover{background:#fff}
+  /* A grid child is min-width:auto by default, so the nowrap objeto refused to
+     shrink and pushed the date column 178px past a 375px screen. */
+  .row > div{min-width:0}
+  .row .nm{font-weight:700;letter-spacing:-.015em;font-size:15.5px}
+  .row:hover .nm{color:var(--magenta)}
+  .row .ob{display:block;font-weight:400;font-size:12.5px;color:var(--grey);margin-top:3px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:62ch}
+  .row .ev{display:block;margin-top:5px;font-family:"JetBrains Mono",monospace;font-size:9.5px;
+    font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--magenta-deep);
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .mt{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.06em;color:var(--grey)}
+  .row .num{text-align:right}
+  @media(max-width:760px){
+    .row{grid-template-columns:1fr auto;gap:6px}
+    .row .mt.hide-s{display:none}
+  }
+  .tagx{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:9px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;padding:2px 5px;border-radius:2px;margin-left:7px;vertical-align:1px}
+  .tagx.ext{background:var(--ink);color:#fff}
+  .tagx.con{background:var(--magenta);color:#fff}
+  .more{margin:26px auto 0;display:block}
+  .more[hidden]{display:none}
+  .empty{padding:60px 0;color:var(--grey);text-align:center}
+
+  /* DETAIL */
+  .back{margin:8px 0 22px}
+  .d-head{border-bottom:1px solid var(--hair);padding-bottom:22px}
+  .d-head h2{font-size:clamp(26px,3.2vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+  .d-key{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--grey);margin-top:10px}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--hair);
+    border:1px solid var(--hair)}
+  .fact{background:var(--paper);padding:15px 16px}
+  .fact dt{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
+  .fact dd{font-size:15px;font-weight:700;letter-spacing:-.01em;margin-top:5px;word-break:break-word}
+  .missing{margin-top:22px;font-size:13px;color:var(--grey);max-width:78ch}
+  /* An empty field has to look empty, not look like a value. Same row, same
+     place, lighter weight, so two companies can be read side by side. */
+  .fact .nd{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:500;
+    letter-spacing:.06em;color:#a5a29c;text-transform:uppercase}
+  /* A field the register sells is not the same as a field nobody has: it reads
+     as an offer, not as a hole. */
+  .fact.ask{background:#fff;border-left:2px solid var(--magenta)}
+  .fact.ask dd{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:700;
+    letter-spacing:.02em;color:var(--magenta)}
+  .fact.ask dd span{font-size:9.5px;font-weight:600;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--grey)}
+  .minibtn{margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--ink);
+    border:1px solid var(--ink);border-radius:2px;padding:7px 11px;line-height:1;cursor:pointer;transition:.18s}
+  .minibtn:hover{background:var(--magenta);border-color:var(--magenta)}
+  .objeto{margin-top:26px;max-width:80ch;color:var(--grey);font-size:15px}
+  .objeto b{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--grey);margin-bottom:7px}
+  .objeto span{color:var(--ink)}
+
+  h3.sec{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--grey);margin:44px 0 14px;padding-top:18px;border-top:1px solid var(--hair)}
+  /* The first heading follows the company name, which already draws a rule. */
+  h3.sec.first{margin-top:26px;padding-top:0;border-top:0}
+  .acto{padding:14px 0;border-bottom:1px solid var(--hair);display:grid;grid-template-columns:96px 1fr;gap:18px}
+  .acto .f{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--grey);letter-spacing:.04em}
+  .acto .labs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+  .lab{font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:600;letter-spacing:.05em;
+    border:1px solid var(--hair);border-radius:2px;padding:2px 6px;color:var(--ink);background:#fff}
+  .acto .tx{font-size:13.5px;color:var(--grey);line-height:1.55}
+  @media(max-width:700px){.acto{grid-template-columns:1fr;gap:5px}}
+
+  /* MISSING BLOCK */
+  .gap{margin-top:46px;border:1px solid var(--ink);padding:24px 26px;background:#fff}
+  .gap b{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--magenta);display:block;margin-bottom:10px}
+  .gap p{font-size:14.5px;color:var(--grey);max-width:74ch}
+  .gap p + p{margin-top:9px}
+  .gap .price{font-family:"JetBrains Mono",monospace;color:var(--ink);font-weight:700}
+  .gap .solidbtn{margin-top:18px}
+
+  /* The order form. It is the only place in the app that writes. */
+  .ped,.ok{margin-top:20px;border-top:1px solid var(--hair);padding-top:20px;max-width:560px}
+  .ped{display:grid;gap:18px}
+  .ped fieldset{border:0;padding:0;margin:0}
+  .ped legend{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--grey);margin-bottom:10px}
+  .ped label{display:block;font-size:14px;color:var(--ink)}
+  .ped label + label{margin-top:11px}
+  .ped label:not(.op) > span{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--grey);margin-bottom:4px}
+  .ped input[type=text],.ped input[type=email],.ped textarea{width:100%;font-size:15px;padding:10px 11px;
+    border:1px solid var(--hair);border-radius:2px;background:#fff;color:var(--ink);outline:none}
+  .ped input:focus,.ped textarea:focus{border-color:var(--magenta)}
+  .ped textarea{min-height:60px;resize:vertical}
+  .ped .op{display:flex;gap:10px;align-items:baseline;cursor:pointer}
+  .ped .op + .op{margin-top:8px}
+  .ped .op input{margin:0;accent-color:var(--magenta)}
+  .ped .op .eur{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;
+    white-space:nowrap;color:var(--ink)}
+  .ped .tot{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--grey);border-top:1px solid var(--hair);padding-top:13px}
+  .ped .tot b{display:inline;font-family:"Archivo",sans-serif;font-size:20px;font-weight:900;
+    letter-spacing:-.02em;color:var(--ink);margin:0 0 0 8px;text-transform:none}
+  /* "sin marcar" and "a presupuestar" are words, not amounts. Printed at 20px
+     bold they read as a figure, which is the one thing they are not. */
+  .ped .tot b.vacio{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;
+    letter-spacing:.06em;color:var(--grey)}
+  .ped .err{color:var(--magenta-deep);font-size:14px;font-weight:600}
+  .ok b{color:var(--ink)}
+  .ok .ref{font-family:"JetBrains Mono",monospace;font-size:19px;font-weight:700;letter-spacing:.06em;color:var(--magenta)}
+  /* .solidbtn sets display:inline-block, which wins over the browser rule for
+     [hidden], so the button stayed on screen after it was hidden. Every
+     display declaration above needs the same guard. */
+  .ped[hidden],.ok[hidden],.solidbtn[hidden]{display:none}
+
+  /* THE CLIENT AREA. It borrows .fact, .lab, .gap and .sec from the ficha on
+     purpose: it is the same page and the same vocabulary, not a second
+     product. The only new thing it needs is a row with a date, a name and an
+     amount or a button. */
+  .c-row{padding:14px 0;border-bottom:1px solid var(--hair);display:grid;
+    grid-template-columns:96px 1fr auto;gap:18px;align-items:baseline}
+  .c-row .f{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--grey);letter-spacing:.04em}
+  .c-row .n{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .c-row .n a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair)}
+  .c-row .n a:hover{color:var(--magenta);border-color:var(--magenta)}
+  .c-row .d{font-size:13px;color:var(--grey);margin-top:5px;line-height:1.55}
+  .c-row .d b{font-family:"JetBrains Mono",monospace;letter-spacing:.06em;color:var(--ink)}
+  .c-row .eur{font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;white-space:nowrap}
+  @media(max-width:700px){.c-row{grid-template-columns:1fr;gap:6px}}
+  /* An empty section says what would be in it, because an empty list with no
+     sentence reads as something broken. */
+  .vacia{font-size:14px;color:var(--grey);max-width:76ch;line-height:1.6}
+  .vacia b{color:var(--ink)}
+  .vig p + .solidbtn{margin-top:16px}
+  /* The entrance reuses .ped, the order form, because it is the same kind of
+     thing: two fields and a button. It only needs to be narrow, since a field
+     stretched to 1280px reads as a search box and not as a login. */
+  /* The rule on .ped separates the form from the sales text above it inside the
+     .gap box. Here there is nothing above it but the heading, so it is a line
+     hanging in the air. */
+  .ped.entrada{max-width:360px;margin-top:30px;border-top:0;padding-top:0}
+  .ped.entrada input[name=codigo]{font-family:"JetBrains Mono",monospace;font-size:22px;
+    letter-spacing:.3em;text-align:center}
+
+  footer{border-top:1px solid var(--hair);padding:22px 32px;max-width:var(--maxw);margin:0 auto;width:100%}
+  footer p{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
+  footer a{color:var(--magenta)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a class="brand" href="/"><img alt="JobLanders" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABMkAAAC/CAYAAADkZItbAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAADoWSURBVHgB7d3hmdy21f/9750n76O7AiMV2KnAcAVRKhBdgZUKhqlASgWzqcB2BZxUYKcC0hVIdwX77AmH/x2td3c4MyQOAP4+13WulWXZAgEQBA9B8H+Q54SHePsQXz/ENw/x5vh7k+EYnx/i54c4HP+5dlYPVh9/ZayPqW7eHP+91cdw/Pkrj3UjIiIiIiIiIiKFsETP7iG6h7i/IvqHaPgymVaL+BD7h/jEdXWzP/4/REREREREREQkU1Ny7NoE0HNh/79A+SLXJw1fSiRGREREREREREQkK/ZKpSVu7leIaWVZiSxxuGedeplWlgVERERERERERMTdB9ZLAp3GB8pi+4z1rF8v/fHvEhERERERERERB7ZK6hfSJMimsL8vkL93pK0Xi/eIiIiIiIiIiEhSHgmy05VTb8jXO3zqRYkyEREREREREZHEvBJkpyvKcmR7s907xztERERERERERGR1O/wTQRa57VEWSLMH2bn4hDbzFxERERERERFZVUMeCbIp3pKPnnzqJdeVdiIiIiIiIiIiVcgpEXRPPvuTNeRVLxban0xEREREREREZAU78ksEWbT4CuSXPLSw1y5z/sCBiIiIiIiIiEiRckwE5ZAMasizXnJIIIqIiIiIiIiIVKUh30SQheerhT351ssnRERERERERERkMR35JoLuj+XzEMm7Xu6PZRQRERERERERSeKP1CuQf6IlMr5y+Zm03pE/+wLoAREfdl4Gvnwl+lfSn6tSn+f61sT614D6WSnCMSYaI0Rk6wJfjounNEaKiDizJEvuq6UsGtL7hfzrpUckrfgQH3j9VWT7d3u00lEuYwmxHfNXN9sYba/jByQn1o7WLtaOti3Ac21nv/8jPtd2EZHU5oyLmkeJiGTiI/kkfF6Lj6T1hjLq5R595VLSiFz3anaPboTldVNybM6Nw0vxAY2F3q5tR40RIlKzhtuubx16GCQikpQNvPcFxE+kFSmjXiy+QWQ9duNrKz5u7ad7NMmT37Pxq2eZsdD+PwHxELntJtDCVgYGRETqsNT8aYodIiKSRAmvFE43PymV8hqqRYPIOgLLfuG1RzfB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lKkPioiIiIiIiGQoUtaranrFsl5bePXyF0REREREREQkS28Yk0glJRouiR4lyErSUlb/ujQ+IiIiIiIiIiLZ6igr0XBJgiwgpWkpq59dEhERERERERERyZZ9ba+kRIMSZPVrKau/ze2TIiIiIiIiIpKx2l65tH2fAlI6+/JlSf3uXDSIiIiIiIiISPZayko4vBR3jEk/qYPtJ9dTVh98LnqUuBUREREREREpQg2ryVqkRoHyE2UtIiIiIiIiIlKMkl9ve4/ULDC+RltSn5yiR6sbRURERERERIrTUV4C4htkK1rK6p8WDSIiIiIiIiJSnEA5r112aJ+nLSppxeMeERERERERESlWQ/7Jh4/IlgXy36fMyqfXLEVEREREREQK15Jn4sFWub1FZExA3ZFnP+3RKkcRERERERGRarTklXjoUOJBfs9ev8zpFeEe9VMRERERERGR6rTkkXhoEXlZII/XL3uUIBMRERERERGpludG6ZZ0iIjM0+LXVzuUIBMRERERERGpXiD9Sh3bnF8bn8ulAun7aouIiIiIiIiIbErL+gmIDq0ek9u1rL9XmfXVbxARERERERGRTQqskyxTckyWFhi/gKm+KiIiIiIiIiKrah7iR65PNthKH3utMiKyHnttt2FMbl3bV3vUV0VERERERESq9D8sKx7ja8akRDj+tBiOf2Y4xn8e4vAQvyKSlvVHe0Uy8npftb752/Hn4eT3RURERERERKQy/z9c+fjxSwWSpQAAAABJRU5ErkJggg=="></a>
+      <span class="nav-tag">Coarchive</span>
+      <!-- Absolute, not /index: this page is also served from its own Vercel host,
+           where a root-relative link would land on nothing. -->
+      <a class="ghostbtn" href="https://www.joblanders.ai/index">&larr; Índice</a>
+    </div>
+    <div class="nav-right">
+      <!-- Always on screen. It used to appear only for a visitor who arrived
+           with an emailed token, which is exactly what James could not find on
+           2026-10-23: "i should have an account linked to my name inside
+           coarchive". Now the button either opens the account or asks for the
+           email that opens it. -->
+      <button class="ghostbtn" id="mi-cuenta"><span class="lbl-long">Mi cuenta</span><span class="lbl-short">Cuenta</span></button>
+      <a class="ghostbtn" href="https://www.joblanders.ai/mercantil"><span class="lbl-long">Por qué existe esto</span><span class="lbl-short">Por qué</span></a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- LISTA -->
+  <section id="pane-list">
+    <div class="hero">
+      <div class="eyebrow"><span class="bar"></span>Base libre · fuente BORME</div>
+      <h1>Las empresas españolas que <em>se han movido</em>.</h1>
+      <p class="hero-sub">
+        Busca por nombre o por lo que hace una empresa, y mira qué se le ha inscrito: constitución,
+        cambio de administrador, ampliación de capital, concurso, extinción.
+      </p>
+      <div class="hero-meta" id="meta"></div>
+    </div>
+
+    <div class="search">
+      <div class="searchrow">
+        <input id="q" type="search" autocomplete="off" spellcheck="false"
+               placeholder="Nombre de empresa, o una palabra del objeto social">
+      </div>
+      <div class="chips" id="chips">
+        <span class="chips-k">Por ejemplo</span>
+        <button class="chip" data-q="inteligencia artificial">inteligencia artificial</button>
+        <button class="chip" data-q="residencia de mayores">residencias de mayores</button>
+        <button class="chip" data-q="instalaciones fotovoltaicas">fotovoltaica</button>
+        <button class="chip" data-q="ciberseguridad">ciberseguridad</button>
+        <button class="chip" data-estado="concurso">en concurso</button>
+      </div>
+      <div class="filters">
+        <select id="provincia"><option value="">Todas las provincias</option></select>
+        <select id="seccion"><option value="">Cualquier sector</option></select>
+        <select id="tramo"><option value="">Cualquier tamaño</option></select>
+        <select id="hecho"><option value="">Le haya pasado cualquier cosa</option></select>
+        <select id="forma"><option value="">Toda forma jurídica</option></select>
+        <select id="anio"><option value="">Constituida en cualquier año</option></select>
+        <select id="estado">
+          <option value="">Cualquier estado</option>
+          <option value="activa">Activa</option>
+          <option value="concurso">En concurso</option>
+          <option value="extinguida">Extinguida</option>
+        </select>
+        <button class="ghostbtn" id="limpiar" hidden>Limpiar</button>
+      </div>
+      <!-- Three of those filters only reach the part of the base that publishes
+           the field, and the share is printed so an empty result is read as
+           "BORME did not publish it" and not as "there are none". -->
+      <p class="cov" id="cov"></p>
+    </div>
+
+    <div class="listbar">
+      <h2 id="listtitle"></h2>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="rows" id="rows"></div>
+    <button class="ghostbtn more" id="more" hidden>Ver más</button>
+  </section>
+
+  <!-- FICHA -->
+  <section id="pane-detail" hidden>
+    <button class="ghostbtn back" id="back">&larr; Volver</button>
+    <div id="detail"></div>
+  </section>
+
+  <!-- CUENTA. Reached only with a token in the link. -->
+  <section id="pane-cuenta" hidden>
+    <button class="ghostbtn back" id="back-cuenta">&larr; Volver a la búsqueda</button>
+    <div id="cuenta"></div>
+  </section>
+</main>
+
+<footer>
+  <p>Fuente: BORME, sección A, datos abiertos del BOE &middot;
+     Los nombres de personas físicas se eliminan al cargar, los de empresas se conservan &middot;
+     <a href="https://www.joblanders.ai/mercantil">joblanders.ai/mercantil</a></p>
+</footer>
+
+<script>
+const RESUMEN = {"empresas":741233,"actos":1182206,"provincias":52,"desde":"2024-10-01","hasta":"2026-10-02","listaProvincias":[{"p":"A CORUÑA","n":13735},{"p":"ALBACETE","n":4847},{"p":"ALICANTE/ALACANT","n":37609},{"p":"ALMERÍA","n":9236},{"p":"ARABA/ÁLAVA","n":3807},{"p":"ASTURIAS","n":10114},{"p":"BADAJOZ","n":5417},{"p":"BARCELONA","n":111491},{"p":"BIZKAIA","n":16152},{"p":"BURGOS","n":3362},{"p":"CANTABRIA","n":5809},{"p":"CASTELLÓN/CASTELLÓ","n":9305},{"p":"CEUTA","n":506},{"p":"CIUDAD REAL","n":5078},{"p":"CUENCA","n":2045},{"p":"CÁCERES","n":2748},{"p":"CÁDIZ","n":10343},{"p":"CÓRDOBA","n":7452},{"p":"GIPUZKOA","n":15123},{"p":"GIRONA","n":14043},{"p":"GRANADA","n":10072},{"p":"GUADALAJARA","n":2203},{"p":"HUELVA","n":4461},{"p":"HUESCA","n":2787},{"p":"ILLES BALEARS","n":22971},{"p":"JAÉN","n":4242},{"p":"LA RIOJA","n":3404},{"p":"LAS PALMAS","n":14635},{"p":"LEÓN","n":3872},{"p":"LLEIDA","n":6749},{"p":"LUGO","n":2999},{"p":"MADRID","n":163557},{"p":"MELILLA","n":544},{"p":"MURCIA","n":21828},{"p":"MÁLAGA","n":34088},{"p":"NAVARRA","n":7178},{"p":"OURENSE","n":2658},{"p":"PALENCIA","n":1277},{"p":"PONTEVEDRA","n":11120},{"p":"SALAMANCA","n":2804},{"p":"SANTA CRUZ DE TENERIFE","n":14016},{"p":"SEGOVIA","n":1594},{"p":"SEVILLA","n":24880},{"p":"SORIA","n":898},{"p":"TARRAGONA","n":11798},{"p":"TERUEL","n":1295},{"p":"TOLEDO","n":8029},{"p":"VALENCIA/VALÈNCIA","n":45884},{"p":"VALLADOLID","n":5618},{"p":"ZAMORA","n":1408},{"p":"ZARAGOZA","n":13107},{"p":"ÁVILA","n":1035}],"listaFormas":[{"f":"SL","n":612823},{"f":"SA","n":39740},{"f":"AIE","n":3091},{"f":"SLL","n":1816},{"f":"SLNE","n":271},{"f":"SCOOP","n":37},{"f":"SCP","n":13}],"listaSecciones":[{"s":"A","nombre":"Agricultura, ganadería, silvicultura y pesca","n":1950},{"s":"B","nombre":"Industrias extractivas","n":51},{"s":"C","nombre":"Industria manufacturera","n":4052},{"s":"D","nombre":"Suministro de energía eléctrica, gas, vapor y aire acondicionado","n":538},{"s":"E","nombre":"Suministro de agua, saneamiento y gestión de residuos","n":165},{"s":"F","nombre":"Construcción","n":6658},{"s":"G","nombre":"Comercio al por mayor y al por menor","n":9024},{"s":"H","nombre":"Transporte y almacenamiento","n":2295},{"s":"I","nombre":"Hostelería","n":5661},{"s":"J","nombre":"Información y comunicaciones","n":2369},{"s":"K","nombre":"Actividades financieras y de seguros","n":2992},{"s":"L","nombre":"Actividades inmobiliarias","n":8071},{"s":"M","nombre":"Actividades profesionales, científicas y técnicas","n":4898},{"s":"N","nombre":"Actividades administrativas y servicios auxiliares","n":2828},{"s":"O","nombre":"Administración Pública y defensa","n":8},{"s":"P","nombre":"Educación","n":930},{"s":"Q","nombre":"Actividades sanitarias y de servicios sociales","n":1308},{"s":"R","nombre":"Actividades artísticas, recreativas y de entretenimiento","n":1571},{"s":"S","nombre":"Otros servicios","n":1594},{"s":"T","nombre":"Actividades de los hogares como empleadores","n":5}],"listaTramos":[{"t":"min","nombre":"Capital mínimo, hasta 3.000 €","n":181786},{"t":"peq","nombre":"3.001 € a 60.000 €","n":77490},{"t":"med","nombre":"60.001 € a 300.000 €","n":23043},{"t":"gra","nombre":"300.001 € a 3.000.000 €","n":19906},{"t":"max","nombre":"Más de 3.000.000 €","n":5704}],"listaHechos":[{"h":"constitucion","nombre":"Se constituyó","n":261335},{"h":"ampliacion","nombre":"Amplió capital","n":48465},{"h":"reduccion","nombre":"Redujo capital","n":13153},{"h":"domicilio","nombre":"Cambió de domicilio","n":92478},{"h":"objeto","nombre":"Cambió de objeto social","n":46141},{"h":"denominacion","nombre":"Cambió de nombre","n":17948},{"h":"estatutos","nombre":"Modificó estatutos","n":59971},{"h":"unipersonal","nombre":"Declaró unipersonalidad","n":153079},{"h":"disolucion","nombre":"Se disolvió","n":58656},{"h":"extincion","nombre":"Se extinguió","n":68176},{"h":"concurso","nombre":"Entró en concurso","n":10433}],"listaAnios":[{"y":"2026","n":92457},{"y":"2025","n":128582},{"y":"2024","n":38622},{"y":"2023","n":243},{"y":"2022","n":77},{"y":"2021","n":18},{"y":"2020","n":24},{"y":"2019","n":13},{"y":"2018","n":10},{"y":"2017","n":11},{"y":"2016","n":14},{"y":"2015","n":10},{"y":"2014","n":11},{"y":"2013","n":11},{"y":"2012","n":11},{"y":"2011","n":8},{"y":"2010","n":5},{"y":"2009","n":3},{"y":"2008","n":3},{"y":"2007","n":2},{"y":"2006","n":6},{"y":"2005","n":8},{"y":"2004","n":6},{"y":"2003","n":5},{"y":"2002","n":20},{"y":"2001","n":4},{"y":"2000","n":2},{"y":"1999","n":3},{"y":"1998","n":3},{"y":"1997","n":2},{"y":"1996","n":4},{"y":"1995","n":6},{"y":"1994","n":4},{"y":"1993","n":3},{"y":"1991","n":1},{"y":"1990","n":1},{"y":"1988","n":1},{"y":"1986","n":1},{"y":"1982","n":1},{"y":"1963","n":1},{"y":"1962","n":1}],"cobertura":{"capital":307932,"cnae":56968,"constitucion":260374}};
+const CATALOGO = [{"id":"identificacion","nombre":"Bloque de identificación (NIF y CNAE)","arancel_cent":298,"precio_cent":361},{"id":"cuentas","nombre":"Cuentas anuales del último ejercicio depositado","arancel_cent":899,"precio_cent":1088},{"id":"otro","nombre":"Otro documento del Registro Mercantil","arancel_cent":null,"precio_cent":null}];
+
+// Prices are printed from the catalogue, never typed into the page. The cents
+// come from pedidos.mjs, which is also what the order is charged at, so the
+// two cannot disagree. A null price means we have not measured that arancel
+// and do not quote it.
+const eur = (cent) => cent === null ? 'a presupuestar'
+  : (cent / 100).toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' €';
+const cat = (id) => CATALOGO.find((c) => c.id === id);
+
+// The page is at / in development and at /coarchive on joblanders.ai, where a
+// Vercel rewrite puts it. There are no sub-routes, so wherever the page was
+// loaded from IS the base, and the endpoints hang off it. An absolute /api
+// would hit the joblanders.ai root instead of this app.
+const RUTA = location.pathname;
+const API = (RUTA.replace(/\/+$/, '')) + '/api';
+
+const $ = (s) => document.querySelector(s);
+const nf = new Intl.NumberFormat('es-ES');
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fecha = (d) => d ? d.split('-').reverse().join('.') : null;
+
+// hero numbers are counted by the database, never typed in
+$('#meta').innerHTML = [
+  ['empresas', nf.format(RESUMEN.empresas)],
+  ['actos inscritos', nf.format(RESUMEN.actos)],
+  ['provincias', RESUMEN.provincias],
+  ['periodo', fecha(RESUMEN.desde) + ' a ' + fecha(RESUMEN.hasta)],
+  ['coste de la fuente', '<em>0 €</em>'],
+].map(([k, v]) => `<div class="hm"><b>${v}</b>${k}</div>`).join('');
+
+// EVERY select is built from counted data, so an option can never offer a
+// filter that returns nothing, and every option carries the number behind it.
+// The count is the whole point: it is what tells you, before you click, that
+// "Hostelería" is a real slice and that most of the base has no sector at all.
+const llenar = (sel, lista, valor, texto) => $(sel).insertAdjacentHTML('beforeend', lista
+  .map((r) => `<option value="${esc(valor(r))}">${esc(texto(r))} (${nf.format(r.n)})</option>`).join(''));
+
+llenar('#provincia', RESUMEN.listaProvincias, (p) => p.p, (p) => p.p);
+llenar('#forma', RESUMEN.listaFormas, (f) => f.f, (f) => f.f);
+llenar('#seccion', RESUMEN.listaSecciones, (s) => s.s, (s) => s.nombre);
+llenar('#tramo', RESUMEN.listaTramos, (t) => t.t, (t) => t.nombre);
+llenar('#hecho', RESUMEN.listaHechos, (h) => h.h, (h) => h.nombre);
+llenar('#anio', RESUMEN.listaAnios, (a) => a.y, (a) => 'Constituida en ' + a.y);
+
+// Said once, with the measured share next to each claim, because a filter on a
+// field that two thirds of the base does not publish is honest only if the
+// reader knows it. The percentages are counted, never typed.
+const share = (k) => `<b>${(100 * RESUMEN.cobertura[k] / RESUMEN.empresas).toFixed(0)} %</b>`;
+$('#cov').innerHTML = `El BORME publica un dato solo dentro del acto que lo contiene, así que estos
+  tres filtros no alcanzan a toda la base: hay sector en ${share('cnae')} de las empresas,
+  capital en ${share('capital')} y fecha de constitución en ${share('constitucion')}.
+  El tamaño es el capital social, lo único que el boletín dice del tamaño: nunca empleados ni ventas.`;
+
+let page = 1, pending = null;
+const FILTROS = ['provincia', 'forma', 'estado', 'seccion', 'tramo', 'hecho', 'anio'];
+
+// Has the visitor asked anything yet? The answer changes what the count can
+// honestly say, because the API stops counting at a cap and "más de 1.000
+// empresas" on an empty search is both true and useless when the real number
+// is baked into the page.
+const preguntando = () => Boolean($('#q').value.trim() || FILTROS.some((k) => $('#' + k).value));
+
+function params () {
+  const u = new URLSearchParams();
+  u.set('q', $('#q').value.trim());
+  for (const k of FILTROS) if ($('#' + k).value) u.set(k, $('#' + k).value);
+  u.set('page', page);
+  return u;
+}
+
+async function buscar (append) {
+  const u = params();
+  if (pending) pending.abort();
+  pending = new AbortController();
+  let data;
+  try { data = await (await fetch(API + '/buscar?' + u, { signal: pending.signal })).json(); }
+  catch (e) { return; }
+
+  const pide = preguntando();
+  $('#limpiar').hidden = !pide;
+  $('#listtitle').textContent = pide ? 'Resultados' : 'Lo último que se ha inscrito';
+  // `relevantes` says the text search filled its whole set, so there are more
+  // companies behind the word than the ones being ordered here. Saying "400
+  // empresas" would be a lie: see RELEVANTES in queries.mjs for why the set is
+  // bounded at all.
+  $('#count').textContent = pide
+    ? (data.total
+        ? (data.relevantes
+            ? 'las ' + nf.format(data.relevantes) + ' empresas más relevantes'
+            : data.capped
+              ? 'más de ' + nf.format(data.tope) + ' empresas'
+              : nf.format(data.total) + (data.total === 1 ? ' empresa' : ' empresas'))
+        : 'sin resultados')
+    : nf.format(RESUMEN.empresas) + ' empresas en la base';
+
+  // The row says WHAT moved, not just when. "Hoja B-123456" used to sit here
+  // and it is the registry's internal key: it means nothing to a reader and it
+  // is on the ficha anyway.
+  const html = data.rows.map((r) => `
+    <div class="row" data-clave="${esc(r.clave)}">
+      <div>
+        <span class="nm">${esc(r.nombre)}${
+          r.estado === 'extinguida' ? '<span class="tagx ext">extinguida</span>' :
+          r.estado === 'concurso' ? '<span class="tagx con">concurso</span>' : ''}</span>
+        ${r.objeto ? `<span class="ob">${esc(r.objeto)}</span>` : ''}
+        ${r.ultimas.length ? `<span class="ev">${r.ultimas.slice(0, 4).map(esc).join(' &middot; ')}</span>` : ''}
+      </div>
+      <div class="mt hide-s">${esc(r.provincia)}</div>
+      <div class="mt hide-s">${esc(r.forma || '')}</div>
+      <div class="mt num">${fecha(r.ultimo_acto)}</div>
+    </div>`).join('');
+
+  if (append) $('#rows').insertAdjacentHTML('beforeend', html);
+  else $('#rows').innerHTML = html || '<p class="empty">Nada con esos criterios.</p>';
+  $('#more').hidden = data.rows.length < 40;
+}
+
+function reset () { page = 1; buscar(false); }
+
+let t;
+$('#q').addEventListener('input', () => { clearTimeout(t); t = setTimeout(reset, 180); });
+for (const k of FILTROS) $('#' + k).addEventListener('change', reset);
+$('#more').addEventListener('click', () => { page++; buscar(true); });
+
+// An example chip sets the whole query, filters included, so it can show a
+// combination the filter bar alone would take three clicks to reach.
+$('#chips').addEventListener('click', (e) => {
+  const c = e.target.closest('.chip');
+  if (!c) return;
+  $('#q').value = c.dataset.q || '';
+  for (const k of FILTROS) $('#' + k).value = c.dataset[k] || '';
+  reset();
+});
+
+$('#limpiar').addEventListener('click', () => {
+  $('#q').value = '';
+  for (const k of FILTROS) $('#' + k).value = '';
+  reset();
+});
+
+$('#rows').addEventListener('click', (e) => {
+  const row = e.target.closest('.row');
+  if (row) ficha(row.dataset.clave);
+});
+
+// RUTA and not '/': on joblanders.ai the page is served from /coarchive, so
+// resetting to the root pointed the address bar at the landing page and a
+// reload left the app.
+const lista = () => {
+  $('#pane-detail').hidden = true;
+  $('#pane-cuenta').hidden = true;
+  $('#pane-list').hidden = false;
+  history.replaceState(null, '', RUTA);
+};
+$('#back').addEventListener('click', lista);
+$('#back-cuenta').addEventListener('click', lista);
+
+let abrirPedido = null;
+$('#detail').addEventListener('click', (ev) => {
+  const b = ev.target.closest('[data-prod]');
+  if (b && abrirPedido) abrirPedido(b.dataset.prod);
+});
+
+const NOMBRE_SECCION = Object.fromEntries(RESUMEN.listaSecciones.map((s) => [s.s, s.nombre]));
+const NOMBRE_HECHO = Object.fromEntries(RESUMEN.listaHechos.map((h) => [h.h, h.nombre]));
+
+async function ficha (clave) {
+  const e = await (await fetch(API + '/empresa?clave=' + encodeURIComponent(clave))).json();
+
+  // THE FICHA IS THE SAME SHAPE FOR EVERY COMPANY. Earlier it printed only the
+  // fields that had a value and listed the rest in a sentence, which made two
+  // companies impossible to compare side by side: the same field was in a
+  // different place, or absent. Now every field is always in the same row, and
+  // an empty one says, in that row, that the BORME did not publish it. The
+  // sentence below the block explains why once, for the whole page.
+  const nd = '<span class="nd">no consta en el BORME</span>';
+  const fact = (k, v) => `<div class="fact"><dt>${k}</dt><dd>${v ? esc(v) : nd}</dd></div>`;
+
+  // The capital is printed as a figure, from capital_eur, and the published
+  // text is kept in the tooltip. A Peseta capital has no capital_eur, so it
+  // falls back to the text rather than being silently converted.
+  const capital = e.capital_eur
+    ? `<div class="fact"><dt>Capital social</dt>
+        <dd title="${esc(e.capital)}">${nf.format(e.capital_eur)} €</dd></div>`
+    : fact('Capital social', e.capital);
+
+  // A field the register SELLS is not a field nobody has. It gets its own row,
+  // its measured price, and a button that opens the form with that product
+  // already ticked, so the distance between "I need the NIF" and "I asked for
+  // it" is one click.
+  const compra = (id, k) => `
+    <div class="fact ask">
+      <dt>${k}</dt>
+      <dd>${eur(cat(id).precio_cent)} <span>con IVA</span></dd>
+      <button class="minibtn" data-prod="${esc(id)}">Comprar</button>
+    </div>`;
+
+  $('#detail').innerHTML = `
+    <div class="d-head">
+      <h2>${esc(e.nombre)}</h2>
+      <div class="d-key">${esc(e.provincia)} &middot; hoja ${esc(e.hoja)} &middot;
+        ${e.n_actos} ${e.n_actos === 1 ? 'acto inscrito' : 'actos inscritos'} &middot;
+        ${e.estado === 'activa' ? 'sin acto de extinción' : esc(e.estado)}</div>
+    </div>
+
+    <h3 class="sec first">Identidad</h3>
+    <dl class="facts">
+      ${fact('Forma jurídica', e.forma)}
+      ${fact('Estado', e.estado === 'activa' ? 'Sin acto de extinción' : e.estado)}
+      ${fact('Constitución', fecha(e.comienzo))}
+      ${fact('Publicada en BORME', fecha(e.constitucion))}
+      ${compra('identificacion', 'NIF')}
+    </dl>
+
+    <h3 class="sec">Actividad y tamaño</h3>
+    <dl class="facts">
+      ${fact('Sector (CNAE)', e.seccion ? NOMBRE_SECCION[e.seccion] : null)}
+      ${fact('Código CNAE', e.cnae)}
+      ${capital}
+      ${compra('cuentas', 'Cuentas anuales')}
+    </dl>
+    <div class="objeto"><b>Objeto social</b><span>${e.objeto ? esc(e.objeto) : nd}</span></div>
+
+    <h3 class="sec">Datos registrales</h3>
+    <dl class="facts">
+      ${fact('Provincia', e.provincia)}
+      ${fact('Hoja registral', e.hoja)}
+      ${fact('Domicilio', e.domicilio)}
+      ${fact('Último movimiento', fecha(e.ultimo_acto))}
+    </dl>
+    ${e.hechos.length ? `<div class="objeto"><b>Qué le ha pasado</b><span>${
+      e.hechos.map((h) => NOMBRE_HECHO[h]).filter(Boolean).map(esc).join(' &middot; ')}</span></div>` : ''}
+
+    <!-- Only for a client who arrived with a token. A watch list is the one
+         thing on this page that runs on the FREE half, so it costs no arancel
+         and it is ours to keep: it holds a BORME clave and an email. -->
+    ${TOKEN ? `
+    <div class="gap vig">
+      <b>Vigilancia</b>
+      <p>Te avisamos por correo cuando el BORME publique un acto nuevo de esta empresa: cambio de
+        administrador, ampliación de capital, concurso, extinción. Sale de la parte libre, así que
+        no cuesta nada.</p>
+      <button class="solidbtn" id="vigilar">${vigilada(e.clave) ? 'Dejar de vigilarla' : 'Vigilar esta empresa'}</button>
+    </div>` : ''}
+
+    <p class="missing">El BORME publica un dato solo dentro del acto que lo contiene, y lo que no
+      se ha vuelto a inscribir no vuelve a salir. Por eso un campo vacío aquí significa que no se
+      ha publicado en el periodo cargado, no que la empresa no lo tenga. El NIF y las cuentas
+      anuales no los publica el boletín en ningún caso: están en el Registro Mercantil y se pagan
+      por consulta.</p>
+
+    <div class="gap">
+      <b>Pedir al Registro Mercantil</b>
+      <!-- The prices here are the SAME with-VAT figures as the Comprar rows
+           above. They used to be the arancel, before VAT, which put two
+           different numbers for one product on one page. -->
+      <p><span class="price">${eur(cat('identificacion').precio_cent)}</span> el bloque de
+        identificación, que trae el NIF y el CNAE, y <span class="price">${eur(cat('cuentas').precio_cent)}</span>
+        el depósito de cuentas anuales completo, IVA incluido. Es el arancel del registro más el
+        IVA: medido el 21 de octubre de 2026 en una compra real.</p>
+      <p>No guardamos ninguno de los dos. Se piden en el momento, por cuenta del cliente que los
+        necesita, y se le entregan a él. La entrega tarda minutos.</p>
+      <button class="solidbtn" id="abrir">Pedir el NIF y las cuentas</button>
+
+      <form class="ped" id="ped" hidden>
+        <fieldset>
+          <legend>Qué necesitas de ${esc(e.nombre)}</legend>
+          ${CATALOGO.map((c) => `
+            <label class="op">
+              <input type="checkbox" name="p" value="${esc(c.id)}">
+              <span>${esc(c.nombre)}</span>
+              <span class="eur">${eur(c.precio_cent)}</span>
+            </label>`).join('')}
+        </fieldset>
+
+        <!-- Not a form we invented. §4.2 of the terms of the sede allows
+             ordering "por cuenta ajena", which is our whole model, but it
+             requires the represented party's identification number and name
+             in the request. Without these three the order cannot be placed at
+             all, so they are asked here instead of in a reply three days
+             later. -->
+        <fieldset>
+          <legend>A nombre de quién se emite</legend>
+          <label><span>Razón social o nombre</span>
+            <input type="text" name="rep_nombre" required autocomplete="organization"></label>
+          <label><span>NIF</span>
+            <input type="text" name="rep_nif" required autocomplete="off" spellcheck="false"></label>
+          <label><span>Correo donde lo entregamos</span>
+            <input type="email" name="rep_email" required autocomplete="email"></label>
+          <!-- Required, and not as a nicety. The CORPME wrote on 2026-10-23
+               that they do not need the represented party accredited, so the
+               only record that a request had a legitimate interest behind it is
+               the one taken here. -->
+          <label><span>Para qué lo necesitas</span>
+            <textarea name="motivo" required minlength="12"
+              placeholder="El registro solo entrega información a quien tiene un interés legítimo, y es el dato que tenemos que poder justificar."></textarea></label>
+        </fieldset>
+
+        <p class="tot">Total con IVA <b id="tot" class="vacio">sin marcar</b></p>
+        <p class="err" id="err" hidden></p>
+        <button class="solidbtn" type="submit" id="enviar">Enviar la petición</button>
+        <p>Primero cobramos, después pedimos. Te llega el importe exacto a ese correo y el
+          documento va detrás, como adjunto.</p>
+      </form>
+
+      <div class="ok" id="ok" hidden></div>
+    </div>
+
+    <h3 class="sec">Actos inscritos</h3>
+    ${e.actos.map((a) => `
+      <div class="acto">
+        <div class="f">${fecha(a.fecha)}</div>
+        <div>
+          ${a.etiquetas.length ? `<div class="labs">${a.etiquetas.slice(0, 8).map((l) => `<span class="lab">${esc(l)}</span>`).join('')}</div>` : ''}
+          <div class="tx">${esc(a.texto)}</div>
+        </div>
+      </div>`).join('')}
+  `;
+  formulario(e.clave);
+  botonVigilar(e.clave);
+  $('#pane-list').hidden = true;
+  $('#pane-cuenta').hidden = true;
+  $('#pane-detail').hidden = false;
+  window.scrollTo(0, 0);
+}
+
+// Wired after every render, like the order form, because the ficha replaces
+// the whole subtree.
+function botonVigilar (clave) {
+  const b = $('#vigilar');
+  if (!b) return;
+  b.addEventListener('click', async () => {
+    const quitar = vigilada(clave);
+    b.disabled = true;
+    b.textContent = 'Guardando…';
+    try {
+      const r = await fetch(API + '/cuenta', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ t: TOKEN, clave, quitar }),
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || 'No se ha podido guardar.');
+      // The server answers with the whole list, so the page never has to guess
+      // what the state became.
+      if (CUENTA) CUENTA.vigilancias = d.vigilancias;
+      b.textContent = vigilada(clave) ? 'Dejar de vigilarla' : 'Vigilar esta empresa';
+    } catch (err) {
+      b.textContent = err.message;
+    } finally {
+      b.disabled = false;
+    }
+  });
+}
+
+// The order form is wired after every render, because the ficha replaces the
+// whole subtree and the old listeners go with it.
+function formulario (clave) {
+  const form = $('#ped'), tot = $('#tot'), err = $('#err');
+  const marcadas = () => [...form.querySelectorAll('input[name=p]:checked')].map((i) => i.value);
+
+  // The total is shown for what it is. It is NOT what gets charged: the server
+  // prices the order again from the same catalogue, because a price that
+  // arrives from a browser is a price the buyer chose.
+  const total = () => {
+    const ids = marcadas().map(cat);
+    const cifra = ids.length && ids.every((c) => c.precio_cent !== null);
+    tot.textContent = !ids.length ? 'sin marcar'
+      : !cifra ? 'a presupuestar'
+      : eur(ids.reduce((n, c) => n + c.precio_cent, 0));
+    tot.className = cifra ? '' : 'vacio';
+  };
+
+  // One way in, two doors. The button at the bottom of the block opens the
+  // form empty; a Comprar button in the facts grid opens it with that product
+  // already ticked and jumps to it, so the row you were reading is the row you
+  // are paying for.
+  const abrir = (prod) => {
+    $('#abrir').hidden = true;
+    form.hidden = false;
+    if (prod) {
+      const box = form.querySelector(`input[name=p][value="${prod}"]`);
+      if (box) box.checked = true;
+    }
+    total();
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    form.querySelector('input[name=rep_nombre]').focus({ preventScroll: true });
+  };
+
+  $('#abrir').addEventListener('click', () => abrir(null));
+  // #detail is NOT replaced between fichas, only its innerHTML, so a listener
+  // added here would stack up one per company visited. The delegated listener
+  // is registered once, at the bottom, and reads this.
+  abrirPedido = abrir;
+  form.addEventListener('change', total);
+  total();
+
+  // Telling a human that an order came in. This is what makes selling by hand
+  // work at all: the page promises the buyer "te llega la forma de pago", and a
+  // person has to send it, so an order nobody is told about is a sale that dies
+  // in the database.
+  //
+  // ⚠️ It has to leave from the browser. Web3Forms answers 403 to a server,
+  // "Use our API in client side or contact support with server IP address (Pro
+  // plan is required)", tested 2026-10-23 from Node with this same key. So
+  // api/pedir.js deliberately sends nothing. The key is the one every form on
+  // joblanders.ai already carries in the clear; it is a public form key and all
+  // it grants is the ability to send us mail.
+  //
+  // Not awaited and never allowed to fail loudly: the order is already stored
+  // and the reference is already on screen, so the notice must not be able to
+  // turn a completed sale into an error message. If it is lost, the order is
+  // still there, and `node pedidos.mjs listar nuevo` finds it.
+  const avisar = (data, d) => {
+    const fd = new FormData();
+    fd.append('access_key', '50206f2b-f9bd-44c2-91e1-c039218aef55');
+    fd.append('subject', `Coarchive · pedido ${data.id} · ${eur(data.precio_cent)} · ${data.empresa}`);
+    fd.append('pedido', data.id);
+    fd.append('empresa', data.empresa);
+    fd.append('documentos', marcadas().map((id) => cat(id).nombre).join(' + '));
+    fd.append('importe', data.presupuestar ? 'a presupuestar, no cobrar todavía' : eur(data.precio_cent));
+    fd.append('cliente', `${d.get('rep_nombre')} · NIF ${d.get('rep_nif')} · ${d.get('rep_email')}`);
+    fd.append('interes_legitimo', d.get('motivo'));
+    fd.append('siguiente_paso', `node pedidos.mjs ver ${data.id}`);
+    fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd }).catch(() => {});
+  };
+
+  form.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const d = new FormData(form);
+    err.hidden = true;
+    $('#enviar').disabled = true;
+    $('#enviar').textContent = 'Enviando…';
+    try {
+      const r = await fetch(API + '/pedir', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clave,
+          productos: marcadas(),
+          rep_nombre: d.get('rep_nombre'),
+          rep_nif: d.get('rep_nif'),
+          rep_email: d.get('rep_email'),
+          motivo: d.get('motivo'),
+        }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || 'No se ha podido registrar la petición.');
+      avisar(data, d);
+      form.hidden = true;
+      // The reference is shown because it is the only thing the client can
+      // quote back to us, and the amount is repeated from the server answer,
+      // not from what the page added up.
+      $('#ok').hidden = false;
+      $('#ok').innerHTML = `<p>Petición registrada con la referencia
+        <span class="ref">${esc(data.id)}</span>.</p>
+        <p>${data.presupuestar
+          ? 'Te escribimos con el precio antes de cobrar nada.'
+          : `Importe: <b>${eur(data.precio_cent)}</b>, IVA incluido. Te llega la forma de pago a
+             ${esc(d.get('rep_email'))} y, en cuanto esté pagado, el documento detrás.`}</p>`;
+    } catch (e2) {
+      err.textContent = e2.message;
+      err.hidden = false;
+    } finally {
+      $('#enviar').disabled = false;
+      $('#enviar').textContent = 'Enviar la petición';
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// THE CLIENT AREA.
+//
+// ⚠️ The token arrives in the link, is read once, and is then TAKEN OUT of the
+// address bar. It is a bearer credential: left in the URL it would travel in
+// the Referer header of every outbound link on the page, sit in the browser
+// history and appear in any screenshot. From here on it lives in this variable.
+//
+// There are no passwords. A client enters by typing their email and the six
+// digits we mail back (/api/entrar), and those digits are exchanged for exactly
+// the same token, so there is one session mechanism and not two. The link
+// issued by hand with `node pedidos.mjs acceso <correo>` still works and is
+// what goes out with a delivered document.
+//
+// ⚠️ Taking it out of the address bar is not enough on its own: a reload then
+// left the client on an empty page with no way back in, and the only cure was
+// to dig the mail out again. So the token is REMEMBERED in localStorage, which
+// is the same thing a session cookie does and no more exposed than the mail it
+// came in. It is a bearer credential on a possibly shared machine, so the
+// account carries a visible Salir that wipes it. localStorage throws outright
+// in some privacy modes, hence the try.
+const LLAVE = 'coarchive_t';
+const recordar = (v) => { try { v ? localStorage.setItem(LLAVE, v) : localStorage.removeItem(LLAVE); } catch (e) {} };
+const recordado = () => { try { return localStorage.getItem(LLAVE); } catch (e) { return null; } };
+
+const deLaUrl = new URLSearchParams(location.search).get('t');
+if (deLaUrl) { recordar(deLaUrl); history.replaceState(null, '', RUTA); }
+let TOKEN = deLaUrl || recordado();
+let CUENTA = null;
+
+// Forgetting has to clear both copies, or the next reload signs the client back
+// in with the token we just told them was gone.
+function olvidar () { TOKEN = null; CUENTA = null; PASO = null; recordar(null); }
+
+// ⚠️ Leaving on purpose also KILLS THE TOKEN on the server. Sessions no longer
+// expire on their own, so this button is the only thing that ends one: clearing
+// only the browser would leave a credential alive forever in a database, which
+// is exactly the trade the no-expiry decision makes. The local copy is dropped
+// first and the request is not awaited for the screen to move, because a client
+// pressing Salir has already left and must not watch a spinner to do it.
+function salirDeLaCuenta () {
+  const t = TOKEN;
+  olvidar();
+  if (t) {
+    fetch(API + '/cuenta', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ t, salir: true }),
+      keepalive: true,
+    }).catch(() => {});
+  }
+}
+
+const vigilada = (clave) => Boolean(CUENTA && CUENTA.vigilancias.some((v) => v.clave === clave));
+
+const ESTADO_PEDIDO = {
+  nuevo: 'pendiente de pago',
+  pagado: 'pagado, pidiéndolo al registro',
+  solicitado: 'pedido al Registro Mercantil',
+  anulado: 'anulado',
+};
+
+// What a delivered order says. The two dates come from the server, and so does
+// `disponible`, because comparing our expiry against the visitor's clock would
+// make the answer depend on their machine.
+const estadoPedido = (p) => {
+  if (p.estado !== 'entregado') return ESTADO_PEDIDO[p.estado] || p.estado;
+  const d = 'entregado el ' + fecha(p.entregado.slice(0, 10));
+  return p.disponible
+    ? `${d}, te lo reenviamos hasta el ${fecha(p.caduca.slice(0, 10))}`
+    : `${d}, caducó el ${fecha(p.caduca.slice(0, 10))}`;
+};
+
+function pintarCuenta () {
+  const c = CUENTA;
+  const pedidos = c.pedidos.length ? c.pedidos.map((p) => `
+    <div class="c-row">
+      <div class="f">${fecha(p.creado.slice(0, 10))}</div>
+      <div>
+        <div class="n">${esc(p.empresa)}</div>
+        <div class="d">${p.productos.map((id) => esc((cat(id) || {}).nombre || id)).join(' + ')}
+          &middot; ref <b>${esc(p.id)}</b> &middot; ${esc(estadoPedido(p))}
+          &middot; a nombre de ${esc(p.rep_nombre)} (${esc(p.rep_nif)})</div>
+      </div>
+      <div class="eur">${eur(p.precio_cent)}</div>
+    </div>`).join('')
+    : '<p class="vacia">Todavía no has pedido nada.</p>';
+
+  const vigs = c.vigilancias.length ? c.vigilancias.map((v) => `
+    <div class="c-row">
+      <div class="f">${fecha(v.creado.slice(0, 10))}</div>
+      <div><div class="n"><a href="#" data-ficha="${esc(v.clave)}">${esc(v.empresa)}</a></div></div>
+      <button class="minibtn" data-quitar="${esc(v.clave)}">Dejar de vigilar</button>
+    </div>`).join('')
+    : `<p class="vacia">No vigilas ninguna empresa todavía. Abre la ficha de una y pulsa
+       <b>Vigilar esta empresa</b>: te avisamos cuando el BORME le publique algo.</p>`;
+
+  $('#cuenta').innerHTML = `
+    <div class="hero">
+      <div class="eyebrow"><span class="bar"></span>Tu cuenta</div>
+      <h1>${esc(c.nombre || c.email)}</h1>
+      <p class="hero-sub">${esc(c.email)}</p>
+      <p><button class="minibtn" data-salir="1">Salir de la cuenta</button></p>
+    </div>
+
+    <h3 class="sec first">Lo que has pedido</h3>
+    ${pedidos}
+
+    <h3 class="sec">Empresas que vigilas</h3>
+    ${vigs}
+
+    <h3 class="sec">Informes</h3>
+    <p class="vacia">Un informe es trabajo nuestro sobre la parte libre y sobre agregados por
+      sector, provincia y tamaño: no es un documento del registro. Dinos qué necesitas saber y te
+      lo presupuestamos. Los que te entreguemos se quedan aquí.</p>
+
+    <h3 class="sec">Qué guardamos de ti</h3>
+    <p class="vacia">El justificante de cada pedido se queda: qué pediste, de qué empresa, cuándo,
+      cuánto y a nombre de quién. <b>El documento del Registro Mercantil no.</b> Se te entrega como
+      adjunto y lo podemos reenviar durante ${c.dias_entrega} días, que es el mismo plazo que da la
+      sede de los registradores; pasado ese plazo hay que volver a pedirlo. No lo incorporamos a
+      ninguna base consultable, porque el §4.4 de las condiciones del registro lo prohíbe, y
+      tampoco lo reutilizamos para el pedido de otro cliente.</p>
+    <p class="vacia">Este navegador recuerda tu sesión y <b>no caduca sola</b>: no te vamos a echar
+      a los noventa días ni a pedirte un código cada vez. Se cierra cuando tú quieres, con
+      <b>Salir de la cuenta</b>, y entonces la sesión se borra también de nuestro lado, no solo de
+      este ordenador. Para volver a entrar, tu correo y seis dígitos.</p>`;
+}
+
+// The entrance. Two steps in one form, and which step it is depends only on
+// whether we have already asked for a code. The email field stays on screen in
+// the second step on purpose: a client who mistyped the address sees it and can
+// correct it without starting over.
+let PASO = null;
+
+function pintarEntrada (error, escrito) {
+  const conCodigo = Boolean(PASO);
+  $('#cuenta').innerHTML = `
+    <div class="hero">
+      <div class="eyebrow"><span class="bar"></span>Tu cuenta</div>
+      <h1>Entra en tu cuenta</h1>
+      <p class="hero-sub">${conCodigo
+        ? `Si <b>${esc(PASO)}</b> tiene algún pedido con nosotros, ya tiene un código de seis dígitos esperando. Vale 15 minutos.`
+        : 'Sin contraseña. Escribe tu correo y te mandamos un código de seis dígitos.'}</p>
+    </div>
+
+    <form class="ped entrada">
+      <label><span>Tu correo</span>
+        <input type="email" name="email" required autocomplete="email" spellcheck="false"
+          value="${esc(PASO || escrito || '')}"></label>
+      ${conCodigo ? `<label><span>Código</span>
+        <input type="text" name="codigo" required inputmode="numeric" autocomplete="one-time-code"
+          maxlength="6" placeholder="------" spellcheck="false"></label>` : ''}
+      ${error ? `<p class="err">${esc(error)}</p>` : ''}
+      <div><button class="solidbtn" type="submit">${conCodigo ? 'Entrar' : 'Mandarme el código'}</button></div>
+    </form>
+
+    <h3 class="sec">Qué abre la cuenta</h3>
+    <p class="vacia">El correo que pusiste en un pedido. La cuenta no se registra ni se da de alta:
+      existe desde el momento en que nos pides algo, y dentro están tus justificantes y las empresas
+      que vigilas. Si no has pedido nada todavía, no hay nada que abrir.</p>`;
+  const campo = $('#cuenta').querySelector(conCodigo ? '[name=codigo]' : '[name=email]');
+  if (campo) campo.focus({ preventScroll: true });
+}
+
+async function abrirCuenta () {
+  $('#pane-list').hidden = true;
+  $('#pane-detail').hidden = true;
+  $('#pane-cuenta').hidden = false;
+  window.scrollTo(0, 0);
+  // Nothing to fetch without a token, and a 404 shown to someone who has not
+  // tried to log in yet would read as a fault instead of as a form.
+  if (!TOKEN) return pintarEntrada();
+  const r = await fetch(API + '/cuenta?t=' + encodeURIComponent(TOKEN || ''));
+  const data = await r.json();
+  if (!r.ok) {
+    // A dead session has to say so where the client is looking, and then put
+    // the way back in right under the sentence instead of leaving them on a
+    // page with a button that no longer opens anything.
+    olvidar();
+    // A 404 now means the session was closed, here or somewhere else, or that
+    // it is one of the old links that still had a date on it.
+    return pintarEntrada(r.status === 404
+      ? 'Esa sesión ya no está abierta. Pide un código y vuelves a entrar.'
+      : (data.error || 'No hemos podido abrir tu cuenta.'));
+  }
+  CUENTA = data;
+  pintarCuenta();
+}
+
+$('#mi-cuenta').addEventListener('click', abrirCuenta);
+
+// One endpoint and one handler for both steps: with no `codigo` it asks for a
+// code, with one it answers the token. The browser is never told whether the
+// address is a client of ours, so the first step always looks the same.
+$('#cuenta').addEventListener('submit', async (ev) => {
+  const f = ev.target.closest('form.entrada');
+  if (!f) return;
+  ev.preventDefault();
+  const btn = f.querySelector('button');
+  const email = f.email.value.trim().toLowerCase();
+  const cuerpo = f.codigo ? { email, codigo: f.codigo.value } : { email };
+  btn.disabled = true;
+  btn.textContent = 'Un momento...';
+  let d = {};
+  let ok = false;
+  try {
+    const r = await fetch(API + '/entrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cuerpo),
+    });
+    d = await r.json().catch(() => ({}));
+    ok = r.ok;
+  } catch (e) {
+    d = { error: 'No hemos podido conectar. Inténtalo otra vez.' };
+  }
+  // A wrong code must not throw away the step: PASO stays, so the client sees
+  // the same two fields with the mistake named above the button.
+  if (!ok) return pintarEntrada(d.error || 'No hemos podido entrar.', email);
+  if (d.t) { TOKEN = d.t; recordar(d.t); PASO = null; return abrirCuenta(); }
+  PASO = email;
+  pintarEntrada();
+});
+
+$('#cuenta').addEventListener('click', async (ev) => {
+  const ficha_ = ev.target.closest('[data-ficha]');
+  if (ficha_) { ev.preventDefault(); return ficha(ficha_.dataset.ficha); }
+  if (ev.target.closest('[data-salir]')) { salirDeLaCuenta(); return lista(); }
+  const quitar = ev.target.closest('[data-quitar]');
+  if (!quitar) return;
+  quitar.disabled = true;
+  const r = await fetch(API + '/cuenta', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ t: TOKEN, clave: quitar.dataset.quitar, quitar: true }),
+  });
+  const d = await r.json();
+  if (r.ok) { CUENTA.vigilancias = d.vigilancias; pintarCuenta(); } else { quitar.textContent = d.error; }
+});
+
+// A remembered or emailed session lands on the account, which is what the link
+// was sent for. The list is loaded behind it so Volver is instant.
+if (TOKEN) abrirCuenta();
+buscar(false);
+</script>
+</body>
+</html>

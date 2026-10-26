@@ -14,28 +14,18 @@
 // serve.mjs imports plantilla() from here, so local development and the
 // published page are built by the same code.
 
-import { createClient } from '@libsql/client'
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
-import os from 'node:os'
 import path from 'node:path'
 
 import { CATALOGO } from './pedidos.mjs'
-import { resumen } from './queries.mjs'
+import { localClient, resumen } from './queries.mjs'
 
 // fileURLToPath, never new URL(...).pathname: the latter keeps the %20 of
 // "Mi unidad" and every file call then fails with EACCES.
 export const HERE = path.dirname(fileURLToPath(import.meta.url))
 
-// The base lives OUTSIDE Google Drive. Drive syncs files while they are still
-// being written, and a half-written SQLite file is a corrupt SQLite file.
-export const DB_FILE = path.join(os.homedir(), 'mercantil-data', 'empresas.db')
-
 const BRAND = path.resolve(HERE, '../content/media/landeros-site/agentes/index.html')
-
-export function localClient () {
-  return createClient({ url: `file:${DB_FILE}` })
-}
 
 async function brand () {
   const html = await readFile(BRAND, 'utf8')
@@ -45,8 +35,16 @@ async function brand () {
   return { wordmark, favicon }
 }
 
-export async function plantilla (db) {
-  const [{ wordmark, favicon }, r] = await Promise.all([brand(), resumen(db)])
+// `ya` is a resumen that has already been counted. Nothing in production uses
+// it, because publish.mjs runs once; serve.mjs does, because the resumen is a
+// full scan of 741.233 rows and costs 5 to 6 seconds, and a browser that
+// reloads three times queues three of those behind one SQLite connection and
+// looks hung. Caching it is correct and not a shortcut: the base is REPLACED
+// wholesale by build.mjs and never written to while being served, so the counts
+// cannot change under a running process. The template itself is still rebuilt
+// on every request, so editing index.html and reloading still works.
+export async function plantilla (db, ya) {
+  const [{ wordmark, favicon }, r] = await Promise.all([brand(), ya || resumen(db)])
   const html = (await readFile(path.join(HERE, 'index.html'), 'utf8'))
     .replace('{{WORDMARK}}', wordmark)
     .replace('{{FAVICON}}', favicon)

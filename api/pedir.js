@@ -23,6 +23,14 @@ export default async function handler (req, res) {
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {})
     if (!pedidos) pedidos = pedidosClient()
     const p = await crear(pedidos, db(), body)
+
+    // No notice is sent from here, and that is a measured limit and not an
+    // oversight. The notice has to leave from the browser, because Web3Forms
+    // answers 403 to a server: "This method is not allowed. Use our API in
+    // client side or contact support with server IP address (Pro plan is
+    // required)", tested 2026-10-23 with the same key the rest of
+    // joblanders.ai uses. The order is already stored by now, so the browser
+    // notice is a nudge and this row is the record.
     res.status(201).send(JSON.stringify({
       id: p.id,
       empresa: p.empresa,

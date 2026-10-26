@@ -33,6 +33,11 @@
     padding:0 32px;width:100%;max-width:var(--maxw);margin-inline:auto}
   .nav-inner::after{content:"";position:absolute;left:32px;right:32px;bottom:0;height:1px;background:var(--hair)}
   .nav-left{display:flex;align-items:center;gap:22px}
+  /* A separate class from .nav-left and not a reuse of it: the 620px rule below
+     hides .nav-left .ghostbtn to drop the index link, and these two have to
+     survive that. */
+  .nav-right{display:flex;align-items:center;gap:10px}
+  .nav-right .ghostbtn[hidden]{display:none}
   .brand{display:flex;align-items:center;gap:8px}
   .brand img{height:22px;width:auto;display:block}
   .nav-tag{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;
@@ -87,11 +92,18 @@
   #q::placeholder{color:#a5a29c;font-weight:400}
   #q:focus{border-color:var(--magenta);box-shadow:0 0 0 3px rgba(255,0,155,.1)}
   .filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  /* max-width is load bearing on a phone. A select is as wide as its longest
+     option, and "Suministro de energía eléctrica, gas, vapor y aire
+     acondicionado (538)" makes the sector one 535 px, which pushed the whole
+     page sideways at 375 px. Measured 2026-10-22. */
   select{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.04em;
-    color:var(--ink);background:#fff;border:1px solid var(--hair);border-radius:2px;padding:9px 10px;cursor:pointer}
+    color:var(--ink);background:#fff;border:1px solid var(--hair);border-radius:2px;padding:9px 10px;
+    cursor:pointer;max-width:100%}
   select:focus{outline:none;border-color:var(--ink)}
   .count{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--grey);margin-left:auto;align-self:center}
+  .cov{margin-top:9px;font-size:12.5px;color:var(--grey);max-width:86ch}
+  .cov b{font-family:"JetBrains Mono",monospace;font-weight:700;color:var(--ink)}
 
   /* EXAMPLES. The base is only obvious once you have seen one question it
      answers, so the page hands over five. */
@@ -142,16 +154,26 @@
   .d-key{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--grey);margin-top:10px}
   .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--hair);
-    border:1px solid var(--hair);margin-top:26px}
+    border:1px solid var(--hair)}
   .fact{background:var(--paper);padding:15px 16px}
   .fact dt{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
   .fact dd{font-size:15px;font-weight:700;letter-spacing:-.01em;margin-top:5px;word-break:break-word}
-  .missing{margin-top:12px;font-size:13px;color:var(--grey);max-width:78ch}
+  .missing{margin-top:22px;font-size:13px;color:var(--grey);max-width:78ch}
+  /* An empty field has to look empty, not look like a value. Same row, same
+     place, lighter weight, so two companies can be read side by side. */
+  .fact .nd{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:500;
+    letter-spacing:.06em;color:#a5a29c;text-transform:uppercase}
   /* A field the register sells is not the same as a field nobody has: it reads
      as an offer, not as a hole. */
-  .fact.ask{background:#fff}
-  .fact.ask dd{font-family:"JetBrains Mono",monospace;font-size:11.5px;font-weight:700;
-    letter-spacing:.06em;text-transform:uppercase;color:var(--magenta)}
+  .fact.ask{background:#fff;border-left:2px solid var(--magenta)}
+  .fact.ask dd{font-family:"JetBrains Mono",monospace;font-size:14px;font-weight:700;
+    letter-spacing:.02em;color:var(--magenta)}
+  .fact.ask dd span{font-size:9.5px;font-weight:600;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--grey)}
+  .minibtn{margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700;
+    letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--ink);
+    border:1px solid var(--ink);border-radius:2px;padding:7px 11px;line-height:1;cursor:pointer;transition:.18s}
+  .minibtn:hover{background:var(--magenta);border-color:var(--magenta)}
   .objeto{margin-top:26px;max-width:80ch;color:var(--grey);font-size:15px}
   .objeto b{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;
     text-transform:uppercase;color:var(--grey);margin-bottom:7px}
@@ -159,6 +181,8 @@
 
   h3.sec{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;letter-spacing:.2em;
     text-transform:uppercase;color:var(--grey);margin:44px 0 14px;padding-top:18px;border-top:1px solid var(--hair)}
+  /* The first heading follows the company name, which already draws a rule. */
+  h3.sec.first{margin-top:26px;padding-top:0;border-top:0}
   .acto{padding:14px 0;border-bottom:1px solid var(--hair);display:grid;grid-template-columns:96px 1fr;gap:18px}
   .acto .f{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--grey);letter-spacing:.04em}
   .acto .labs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
@@ -211,6 +235,35 @@
      display declaration above needs the same guard. */
   .ped[hidden],.ok[hidden],.solidbtn[hidden]{display:none}
 
+  /* THE CLIENT AREA. It borrows .fact, .lab, .gap and .sec from the ficha on
+     purpose: it is the same page and the same vocabulary, not a second
+     product. The only new thing it needs is a row with a date, a name and an
+     amount or a button. */
+  .c-row{padding:14px 0;border-bottom:1px solid var(--hair);display:grid;
+    grid-template-columns:96px 1fr auto;gap:18px;align-items:baseline}
+  .c-row .f{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--grey);letter-spacing:.04em}
+  .c-row .n{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .c-row .n a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair)}
+  .c-row .n a:hover{color:var(--magenta);border-color:var(--magenta)}
+  .c-row .d{font-size:13px;color:var(--grey);margin-top:5px;line-height:1.55}
+  .c-row .d b{font-family:"JetBrains Mono",monospace;letter-spacing:.06em;color:var(--ink)}
+  .c-row .eur{font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;white-space:nowrap}
+  @media(max-width:700px){.c-row{grid-template-columns:1fr;gap:6px}}
+  /* An empty section says what would be in it, because an empty list with no
+     sentence reads as something broken. */
+  .vacia{font-size:14px;color:var(--grey);max-width:76ch;line-height:1.6}
+  .vacia b{color:var(--ink)}
+  .vig p + .solidbtn{margin-top:16px}
+  /* The entrance reuses .ped, the order form, because it is the same kind of
+     thing: two fields and a button. It only needs to be narrow, since a field
+     stretched to 1280px reads as a search box and not as a login. */
+  /* The rule on .ped separates the form from the sales text above it inside the
+     .gap box. Here there is nothing above it but the heading, so it is a line
+     hanging in the air. */
+  .ped.entrada{max-width:360px;margin-top:30px;border-top:0;padding-top:0}
+  .ped.entrada input[name=codigo]{font-family:"JetBrains Mono",monospace;font-size:22px;
+    letter-spacing:.3em;text-align:center}
+
   footer{border-top:1px solid var(--hair);padding:22px 32px;max-width:var(--maxw);margin:0 auto;width:100%}
   footer p{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey)}
   footer a{color:var(--magenta)}
@@ -227,7 +280,15 @@
            where a root-relative link would land on nothing. -->
       <a class="ghostbtn" href="https://www.joblanders.ai/index">&larr; Índice</a>
     </div>
-    <a class="ghostbtn" href="https://www.joblanders.ai/mercantil"><span class="lbl-long">Por qué existe esto</span><span class="lbl-short">Por qué</span></a>
+    <div class="nav-right">
+      <!-- Always on screen. It used to appear only for a visitor who arrived
+           with an emailed token, which is exactly what James could not find on
+           2026-10-23: "i should have an account linked to my name inside
+           coarchive". Now the button either opens the account or asks for the
+           email that opens it. -->
+      <button class="ghostbtn" id="mi-cuenta"><span class="lbl-long">Mi cuenta</span><span class="lbl-short">Cuenta</span></button>
+      <a class="ghostbtn" href="https://www.joblanders.ai/mercantil"><span class="lbl-long">Por qué existe esto</span><span class="lbl-short">Por qué</span></a>
+    </div>
   </div>
 </nav>
 
@@ -259,7 +320,11 @@
       </div>
       <div class="filters">
         <select id="provincia"><option value="">Todas las provincias</option></select>
+        <select id="seccion"><option value="">Cualquier sector</option></select>
+        <select id="tramo"><option value="">Cualquier tamaño</option></select>
+        <select id="hecho"><option value="">Le haya pasado cualquier cosa</option></select>
         <select id="forma"><option value="">Toda forma jurídica</option></select>
+        <select id="anio"><option value="">Constituida en cualquier año</option></select>
         <select id="estado">
           <option value="">Cualquier estado</option>
           <option value="activa">Activa</option>
@@ -268,6 +333,10 @@
         </select>
         <button class="ghostbtn" id="limpiar" hidden>Limpiar</button>
       </div>
+      <!-- Three of those filters only reach the part of the base that publishes
+           the field, and the share is printed so an empty result is read as
+           "BORME did not publish it" and not as "there are none". -->
+      <p class="cov" id="cov"></p>
     </div>
 
     <div class="listbar">
@@ -282,6 +351,12 @@
   <section id="pane-detail" hidden>
     <button class="ghostbtn back" id="back">&larr; Volver</button>
     <div id="detail"></div>
+  </section>
+
+  <!-- CUENTA. Reached only with a token in the link. -->
+  <section id="pane-cuenta" hidden>
+    <button class="ghostbtn back" id="back-cuenta">&larr; Volver a la búsqueda</button>
+    <div id="cuenta"></div>
   </section>
 </main>
 
@@ -307,7 +382,8 @@ const cat = (id) => CATALOGO.find((c) => c.id === id);
 // Vercel rewrite puts it. There are no sub-routes, so wherever the page was
 // loaded from IS the base, and the endpoints hang off it. An absolute /api
 // would hit the joblanders.ai root instead of this app.
-const API = (location.pathname.replace(/\/+$/, '')) + '/api';
+const RUTA = location.pathname;
+const API = (RUTA.replace(/\/+$/, '')) + '/api';
 
 const $ = (s) => document.querySelector(s);
 const nf = new Intl.NumberFormat('es-ES');
@@ -323,19 +399,34 @@ $('#meta').innerHTML = [
   ['coste de la fuente', '<em>0 €</em>'],
 ].map(([k, v]) => `<div class="hm"><b>${v}</b>${k}</div>`).join('');
 
-// Both selects are built from the counted data, so an option can never offer a
-// filter that returns nothing.
-$('#provincia').insertAdjacentHTML('beforeend', RESUMEN.listaProvincias
-  .map((p) => `<option value="${esc(p.p)}">${esc(p.p)} (${nf.format(p.n)})</option>`).join(''));
+// EVERY select is built from counted data, so an option can never offer a
+// filter that returns nothing, and every option carries the number behind it.
+// The count is the whole point: it is what tells you, before you click, that
+// "Hostelería" is a real slice and that most of the base has no sector at all.
+const llenar = (sel, lista, valor, texto) => $(sel).insertAdjacentHTML('beforeend', lista
+  .map((r) => `<option value="${esc(valor(r))}">${esc(texto(r))} (${nf.format(r.n)})</option>`).join(''));
 
-$('#forma').insertAdjacentHTML('beforeend', RESUMEN.listaFormas
-  .map((f) => `<option value="${esc(f.f)}">${esc(f.f)} (${nf.format(f.n)})</option>`).join(''));
+llenar('#provincia', RESUMEN.listaProvincias, (p) => p.p, (p) => p.p);
+llenar('#forma', RESUMEN.listaFormas, (f) => f.f, (f) => f.f);
+llenar('#seccion', RESUMEN.listaSecciones, (s) => s.s, (s) => s.nombre);
+llenar('#tramo', RESUMEN.listaTramos, (t) => t.t, (t) => t.nombre);
+llenar('#hecho', RESUMEN.listaHechos, (h) => h.h, (h) => h.nombre);
+llenar('#anio', RESUMEN.listaAnios, (a) => a.y, (a) => 'Constituida en ' + a.y);
+
+// Said once, with the measured share next to each claim, because a filter on a
+// field that two thirds of the base does not publish is honest only if the
+// reader knows it. The percentages are counted, never typed.
+const share = (k) => `<b>${(100 * RESUMEN.cobertura[k] / RESUMEN.empresas).toFixed(0)} %</b>`;
+$('#cov').innerHTML = `El BORME publica un dato solo dentro del acto que lo contiene, así que estos
+  tres filtros no alcanzan a toda la base: hay sector en ${share('cnae')} de las empresas,
+  capital en ${share('capital')} y fecha de constitución en ${share('constitucion')}.
+  El tamaño es el capital social, lo único que el boletín dice del tamaño: nunca empleados ni ventas.`;
 
 let page = 1, pending = null;
-const FILTROS = ['provincia', 'forma', 'estado'];
+const FILTROS = ['provincia', 'forma', 'estado', 'seccion', 'tramo', 'hecho', 'anio'];
 
 // Has the visitor asked anything yet? The answer changes what the count can
-// honestly say, because the API caps its COUNT at 5001 and "más de 5.000
+// honestly say, because the API stops counting at a cap and "más de 1.000
 // empresas" on an empty search is both true and useless when the real number
 // is baked into the page.
 const preguntando = () => Boolean($('#q').value.trim() || FILTROS.some((k) => $('#' + k).value));
@@ -359,9 +450,17 @@ async function buscar (append) {
   const pide = preguntando();
   $('#limpiar').hidden = !pide;
   $('#listtitle').textContent = pide ? 'Resultados' : 'Lo último que se ha inscrito';
+  // `relevantes` says the text search filled its whole set, so there are more
+  // companies behind the word than the ones being ordered here. Saying "400
+  // empresas" would be a lie: see RELEVANTES in queries.mjs for why the set is
+  // bounded at all.
   $('#count').textContent = pide
     ? (data.total
-        ? (data.capped ? 'más de 5.000 empresas' : nf.format(data.total) + (data.total === 1 ? ' empresa' : ' empresas'))
+        ? (data.relevantes
+            ? 'las ' + nf.format(data.relevantes) + ' empresas más relevantes'
+            : data.capped
+              ? 'más de ' + nf.format(data.tope) + ' empresas'
+              : nf.format(data.total) + (data.total === 1 ? ' empresa' : ' empresas'))
         : 'sin resultados')
     : nf.format(RESUMEN.empresas) + ' empresas en la base';
 
@@ -415,33 +514,57 @@ $('#rows').addEventListener('click', (e) => {
   if (row) ficha(row.dataset.clave);
 });
 
-$('#back').addEventListener('click', () => {
+// RUTA and not '/': on joblanders.ai the page is served from /coarchive, so
+// resetting to the root pointed the address bar at the landing page and a
+// reload left the app.
+const lista = () => {
   $('#pane-detail').hidden = true;
+  $('#pane-cuenta').hidden = true;
   $('#pane-list').hidden = false;
-  history.replaceState(null, '', '/');
+  history.replaceState(null, '', RUTA);
+};
+$('#back').addEventListener('click', lista);
+$('#back-cuenta').addEventListener('click', lista);
+
+let abrirPedido = null;
+$('#detail').addEventListener('click', (ev) => {
+  const b = ev.target.closest('[data-prod]');
+  if (b && abrirPedido) abrirPedido(b.dataset.prod);
 });
+
+const NOMBRE_SECCION = Object.fromEntries(RESUMEN.listaSecciones.map((s) => [s.s, s.nombre]));
+const NOMBRE_HECHO = Object.fromEntries(RESUMEN.listaHechos.map((h) => [h.h, h.nombre]));
 
 async function ficha (clave) {
   const e = await (await fetch(API + '/empresa?clave=' + encodeURIComponent(clave))).json();
-  const fact = (k, v) => `<div class="fact"><dt>${k}</dt><dd>${esc(v)}</dd></div>`;
 
-  // An empty field is not printed as a row of "no publicado". For a company
-  // that existed before the loaded period, all six are empty, and six empty
-  // cells read as a broken page instead of as the honest shape of a bulletin
-  // that only ever publishes what was inscribed. So: print what there is, and
-  // name what is missing once, underneath.
-  // Third element is how the field is named inside a sentence. Lowercasing the
-  // label instead turned "Publicada en BORME" into "publicada en borme".
-  const CAMPOS = [
-    ['Forma jurídica', e.forma, 'la forma jurídica'],
-    ['Constitución', fecha(e.comienzo), 'la fecha de constitución'],
-    ['Publicada en BORME', fecha(e.constitucion), 'la fecha de publicación en el BORME'],
-    ['CNAE', e.cnae, 'el CNAE'],
-    ['Capital', e.capital, 'el capital'],
-    ['Domicilio', e.domicilio, 'el domicilio'],
-  ];
-  const hay = CAMPOS.filter(([, v]) => v);
-  const faltan = CAMPOS.filter(([, v]) => !v).map(([, , frase]) => frase);
+  // THE FICHA IS THE SAME SHAPE FOR EVERY COMPANY. Earlier it printed only the
+  // fields that had a value and listed the rest in a sentence, which made two
+  // companies impossible to compare side by side: the same field was in a
+  // different place, or absent. Now every field is always in the same row, and
+  // an empty one says, in that row, that the BORME did not publish it. The
+  // sentence below the block explains why once, for the whole page.
+  const nd = '<span class="nd">no consta en el BORME</span>';
+  const fact = (k, v) => `<div class="fact"><dt>${k}</dt><dd>${v ? esc(v) : nd}</dd></div>`;
+
+  // The capital is printed as a figure, from capital_eur, and the published
+  // text is kept in the tooltip. A Peseta capital has no capital_eur, so it
+  // falls back to the text rather than being silently converted.
+  const capital = e.capital_eur
+    ? `<div class="fact"><dt>Capital social</dt>
+        <dd title="${esc(e.capital)}">${nf.format(e.capital_eur)} €</dd></div>`
+    : fact('Capital social', e.capital);
+
+  // A field the register SELLS is not a field nobody has. It gets its own row,
+  // its measured price, and a button that opens the form with that product
+  // already ticked, so the distance between "I need the NIF" and "I asked for
+  // it" is one click.
+  const compra = (id, k) => `
+    <div class="fact ask">
+      <dt>${k}</dt>
+      <dd>${eur(cat(id).precio_cent)} <span>con IVA</span></dd>
+      <button class="minibtn" data-prod="${esc(id)}">Comprar</button>
+    </div>`;
 
   $('#detail').innerHTML = `
     <div class="d-head">
@@ -451,23 +574,61 @@ async function ficha (clave) {
         ${e.estado === 'activa' ? 'sin acto de extinción' : esc(e.estado)}</div>
     </div>
 
+    <h3 class="sec first">Identidad</h3>
     <dl class="facts">
-      ${hay.map(([k, v]) => fact(k, v)).join('')}
-      <div class="fact ask"><dt>NIF</dt><dd>a petición</dd></div>
-      <div class="fact ask"><dt>Cuentas anuales</dt><dd>a petición</dd></div>
+      ${fact('Forma jurídica', e.forma)}
+      ${fact('Estado', e.estado === 'activa' ? 'Sin acto de extinción' : e.estado)}
+      ${fact('Constitución', fecha(e.comienzo))}
+      ${fact('Publicada en BORME', fecha(e.constitucion))}
+      ${compra('identificacion', 'NIF')}
     </dl>
-    ${faltan.length ? `<p class="missing">El BORME publica un dato solo dentro del acto que lo
-      contiene, y lo que no se ha vuelto a inscribir no vuelve a salir. Aquí no consta
-      ${faltan.map(esc).join(', ').replace(/, ([^,]*)$/, faltan.length > 1 ? ' y $1' : '$1')}.</p>` : ''}
 
-    ${e.objeto ? `<div class="objeto"><b>Objeto social</b><span>${esc(e.objeto)}</span></div>` : ''}
+    <h3 class="sec">Actividad y tamaño</h3>
+    <dl class="facts">
+      ${fact('Sector (CNAE)', e.seccion ? NOMBRE_SECCION[e.seccion] : null)}
+      ${fact('Código CNAE', e.cnae)}
+      ${capital}
+      ${compra('cuentas', 'Cuentas anuales')}
+    </dl>
+    <div class="objeto"><b>Objeto social</b><span>${e.objeto ? esc(e.objeto) : nd}</span></div>
+
+    <h3 class="sec">Datos registrales</h3>
+    <dl class="facts">
+      ${fact('Provincia', e.provincia)}
+      ${fact('Hoja registral', e.hoja)}
+      ${fact('Domicilio', e.domicilio)}
+      ${fact('Último movimiento', fecha(e.ultimo_acto))}
+    </dl>
+    ${e.hechos.length ? `<div class="objeto"><b>Qué le ha pasado</b><span>${
+      e.hechos.map((h) => NOMBRE_HECHO[h]).filter(Boolean).map(esc).join(' &middot; ')}</span></div>` : ''}
+
+    <!-- Only for a client who arrived with a token. A watch list is the one
+         thing on this page that runs on the FREE half, so it costs no arancel
+         and it is ours to keep: it holds a BORME clave and an email. -->
+    ${TOKEN ? `
+    <div class="gap vig">
+      <b>Vigilancia</b>
+      <p>Te avisamos por correo cuando el BORME publique un acto nuevo de esta empresa: cambio de
+        administrador, ampliación de capital, concurso, extinción. Sale de la parte libre, así que
+        no cuesta nada.</p>
+      <button class="solidbtn" id="vigilar">${vigilada(e.clave) ? 'Dejar de vigilarla' : 'Vigilar esta empresa'}</button>
+    </div>` : ''}
+
+    <p class="missing">El BORME publica un dato solo dentro del acto que lo contiene, y lo que no
+      se ha vuelto a inscribir no vuelve a salir. Por eso un campo vacío aquí significa que no se
+      ha publicado en el periodo cargado, no que la empresa no lo tenga. El NIF y las cuentas
+      anuales no los publica el boletín en ningún caso: están en el Registro Mercantil y se pagan
+      por consulta.</p>
 
     <div class="gap">
-      <b>Los dos campos que el BORME no trae</b>
-      <p>El NIF y las cuentas anuales no se publican en el boletín: solo están en el Registro
-        Mercantil y se pagan por consulta. <span class="price">${eur(cat('identificacion').arancel_cent)}</span>
-        el bloque de identificación, que trae NIF y CNAE, y <span class="price">${eur(cat('cuentas').arancel_cent)}</span>
-        el depósito de cuentas completo, los dos antes de IVA (medido el 21 de octubre de 2026).</p>
+      <b>Pedir al Registro Mercantil</b>
+      <!-- The prices here are the SAME with-VAT figures as the Comprar rows
+           above. They used to be the arancel, before VAT, which put two
+           different numbers for one product on one page. -->
+      <p><span class="price">${eur(cat('identificacion').precio_cent)}</span> el bloque de
+        identificación, que trae el NIF y el CNAE, y <span class="price">${eur(cat('cuentas').precio_cent)}</span>
+        el depósito de cuentas anuales completo, IVA incluido. Es el arancel del registro más el
+        IVA: medido el 21 de octubre de 2026 en una compra real.</p>
       <p>No guardamos ninguno de los dos. Se piden en el momento, por cuenta del cliente que los
         necesita, y se le entregan a él. La entrega tarda minutos.</p>
       <button class="solidbtn" id="abrir">Pedir el NIF y las cuentas</button>
@@ -497,8 +658,13 @@ async function ficha (clave) {
             <input type="text" name="rep_nif" required autocomplete="off" spellcheck="false"></label>
           <label><span>Correo donde lo entregamos</span>
             <input type="email" name="rep_email" required autocomplete="email"></label>
-          <label><span>Para qué lo necesitas (opcional)</span>
-            <textarea name="motivo"></textarea></label>
+          <!-- Required, and not as a nicety. The CORPME wrote on 2026-10-23
+               that they do not need the represented party accredited, so the
+               only record that a request had a legitimate interest behind it is
+               the one taken here. -->
+          <label><span>Para qué lo necesitas</span>
+            <textarea name="motivo" required minlength="12"
+              placeholder="El registro solo entrega información a quien tiene un interés legítimo, y es el dato que tenemos que poder justificar."></textarea></label>
         </fieldset>
 
         <p class="tot">Total con IVA <b id="tot" class="vacio">sin marcar</b></p>
@@ -522,9 +688,40 @@ async function ficha (clave) {
       </div>`).join('')}
   `;
   formulario(e.clave);
+  botonVigilar(e.clave);
   $('#pane-list').hidden = true;
+  $('#pane-cuenta').hidden = true;
   $('#pane-detail').hidden = false;
   window.scrollTo(0, 0);
+}
+
+// Wired after every render, like the order form, because the ficha replaces
+// the whole subtree.
+function botonVigilar (clave) {
+  const b = $('#vigilar');
+  if (!b) return;
+  b.addEventListener('click', async () => {
+    const quitar = vigilada(clave);
+    b.disabled = true;
+    b.textContent = 'Guardando…';
+    try {
+      const r = await fetch(API + '/cuenta', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ t: TOKEN, clave, quitar }),
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.error || 'No se ha podido guardar.');
+      // The server answers with the whole list, so the page never has to guess
+      // what the state became.
+      if (CUENTA) CUENTA.vigilancias = d.vigilancias;
+      b.textContent = vigilada(clave) ? 'Dejar de vigilarla' : 'Vigilar esta empresa';
+    } catch (err) {
+      b.textContent = err.message;
+    } finally {
+      b.disabled = false;
+    }
+  });
 }
 
 // The order form is wired after every render, because the ficha replaces the
@@ -545,13 +742,59 @@ function formulario (clave) {
     tot.className = cifra ? '' : 'vacio';
   };
 
-  $('#abrir').addEventListener('click', () => {
+  // One way in, two doors. The button at the bottom of the block opens the
+  // form empty; a Comprar button in the facts grid opens it with that product
+  // already ticked and jumps to it, so the row you were reading is the row you
+  // are paying for.
+  const abrir = (prod) => {
     $('#abrir').hidden = true;
     form.hidden = false;
-    form.querySelector('input[name=p]').focus();
-  });
+    if (prod) {
+      const box = form.querySelector(`input[name=p][value="${prod}"]`);
+      if (box) box.checked = true;
+    }
+    total();
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    form.querySelector('input[name=rep_nombre]').focus({ preventScroll: true });
+  };
+
+  $('#abrir').addEventListener('click', () => abrir(null));
+  // #detail is NOT replaced between fichas, only its innerHTML, so a listener
+  // added here would stack up one per company visited. The delegated listener
+  // is registered once, at the bottom, and reads this.
+  abrirPedido = abrir;
   form.addEventListener('change', total);
   total();
+
+  // Telling a human that an order came in. This is what makes selling by hand
+  // work at all: the page promises the buyer "te llega la forma de pago", and a
+  // person has to send it, so an order nobody is told about is a sale that dies
+  // in the database.
+  //
+  // ⚠️ It has to leave from the browser. Web3Forms answers 403 to a server,
+  // "Use our API in client side or contact support with server IP address (Pro
+  // plan is required)", tested 2026-10-23 from Node with this same key. So
+  // api/pedir.js deliberately sends nothing. The key is the one every form on
+  // joblanders.ai already carries in the clear; it is a public form key and all
+  // it grants is the ability to send us mail.
+  //
+  // Not awaited and never allowed to fail loudly: the order is already stored
+  // and the reference is already on screen, so the notice must not be able to
+  // turn a completed sale into an error message. If it is lost, the order is
+  // still there, and `node pedidos.mjs listar nuevo` finds it.
+  const avisar = (data, d) => {
+    const fd = new FormData();
+    fd.append('access_key', '50206f2b-f9bd-44c2-91e1-c039218aef55');
+    fd.append('subject', `Coarchive · pedido ${data.id} · ${eur(data.precio_cent)} · ${data.empresa}`);
+    fd.append('pedido', data.id);
+    fd.append('empresa', data.empresa);
+    fd.append('documentos', marcadas().map((id) => cat(id).nombre).join(' + '));
+    fd.append('importe', data.presupuestar ? 'a presupuestar, no cobrar todavía' : eur(data.precio_cent));
+    fd.append('cliente', `${d.get('rep_nombre')} · NIF ${d.get('rep_nif')} · ${d.get('rep_email')}`);
+    fd.append('interes_legitimo', d.get('motivo'));
+    fd.append('siguiente_paso', `node pedidos.mjs ver ${data.id}`);
+    fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd }).catch(() => {});
+  };
 
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
@@ -574,6 +817,7 @@ function formulario (clave) {
       });
       const data = await r.json();
       if (!r.ok) throw new Error(data.error || 'No se ha podido registrar la petición.');
+      avisar(data, d);
       form.hidden = true;
       // The reference is shown because it is the only thing the client can
       // quote back to us, and the amount is repeated from the server answer,
@@ -595,6 +839,250 @@ function formulario (clave) {
   });
 }
 
+// ---------------------------------------------------------------------------
+// THE CLIENT AREA.
+//
+// ⚠️ The token arrives in the link, is read once, and is then TAKEN OUT of the
+// address bar. It is a bearer credential: left in the URL it would travel in
+// the Referer header of every outbound link on the page, sit in the browser
+// history and appear in any screenshot. From here on it lives in this variable.
+//
+// There are no passwords. A client enters by typing their email and the six
+// digits we mail back (/api/entrar), and those digits are exchanged for exactly
+// the same token, so there is one session mechanism and not two. The link
+// issued by hand with `node pedidos.mjs acceso <correo>` still works and is
+// what goes out with a delivered document.
+//
+// ⚠️ Taking it out of the address bar is not enough on its own: a reload then
+// left the client on an empty page with no way back in, and the only cure was
+// to dig the mail out again. So the token is REMEMBERED in localStorage, which
+// is the same thing a session cookie does and no more exposed than the mail it
+// came in. It is a bearer credential on a possibly shared machine, so the
+// account carries a visible Salir that wipes it. localStorage throws outright
+// in some privacy modes, hence the try.
+const LLAVE = 'coarchive_t';
+const recordar = (v) => { try { v ? localStorage.setItem(LLAVE, v) : localStorage.removeItem(LLAVE); } catch (e) {} };
+const recordado = () => { try { return localStorage.getItem(LLAVE); } catch (e) { return null; } };
+
+const deLaUrl = new URLSearchParams(location.search).get('t');
+if (deLaUrl) { recordar(deLaUrl); history.replaceState(null, '', RUTA); }
+let TOKEN = deLaUrl || recordado();
+let CUENTA = null;
+
+// Forgetting has to clear both copies, or the next reload signs the client back
+// in with the token we just told them was gone.
+function olvidar () { TOKEN = null; CUENTA = null; PASO = null; recordar(null); }
+
+// ⚠️ Leaving on purpose also KILLS THE TOKEN on the server. Sessions no longer
+// expire on their own, so this button is the only thing that ends one: clearing
+// only the browser would leave a credential alive forever in a database, which
+// is exactly the trade the no-expiry decision makes. The local copy is dropped
+// first and the request is not awaited for the screen to move, because a client
+// pressing Salir has already left and must not watch a spinner to do it.
+function salirDeLaCuenta () {
+  const t = TOKEN;
+  olvidar();
+  if (t) {
+    fetch(API + '/cuenta', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ t, salir: true }),
+      keepalive: true,
+    }).catch(() => {});
+  }
+}
+
+const vigilada = (clave) => Boolean(CUENTA && CUENTA.vigilancias.some((v) => v.clave === clave));
+
+const ESTADO_PEDIDO = {
+  nuevo: 'pendiente de pago',
+  pagado: 'pagado, pidiéndolo al registro',
+  solicitado: 'pedido al Registro Mercantil',
+  anulado: 'anulado',
+};
+
+// What a delivered order says. The two dates come from the server, and so does
+// `disponible`, because comparing our expiry against the visitor's clock would
+// make the answer depend on their machine.
+const estadoPedido = (p) => {
+  if (p.estado !== 'entregado') return ESTADO_PEDIDO[p.estado] || p.estado;
+  const d = 'entregado el ' + fecha(p.entregado.slice(0, 10));
+  return p.disponible
+    ? `${d}, te lo reenviamos hasta el ${fecha(p.caduca.slice(0, 10))}`
+    : `${d}, caducó el ${fecha(p.caduca.slice(0, 10))}`;
+};
+
+function pintarCuenta () {
+  const c = CUENTA;
+  const pedidos = c.pedidos.length ? c.pedidos.map((p) => `
+    <div class="c-row">
+      <div class="f">${fecha(p.creado.slice(0, 10))}</div>
+      <div>
+        <div class="n">${esc(p.empresa)}</div>
+        <div class="d">${p.productos.map((id) => esc((cat(id) || {}).nombre || id)).join(' + ')}
+          &middot; ref <b>${esc(p.id)}</b> &middot; ${esc(estadoPedido(p))}
+          &middot; a nombre de ${esc(p.rep_nombre)} (${esc(p.rep_nif)})</div>
+      </div>
+      <div class="eur">${eur(p.precio_cent)}</div>
+    </div>`).join('')
+    : '<p class="vacia">Todavía no has pedido nada.</p>';
+
+  const vigs = c.vigilancias.length ? c.vigilancias.map((v) => `
+    <div class="c-row">
+      <div class="f">${fecha(v.creado.slice(0, 10))}</div>
+      <div><div class="n"><a href="#" data-ficha="${esc(v.clave)}">${esc(v.empresa)}</a></div></div>
+      <button class="minibtn" data-quitar="${esc(v.clave)}">Dejar de vigilar</button>
+    </div>`).join('')
+    : `<p class="vacia">No vigilas ninguna empresa todavía. Abre la ficha de una y pulsa
+       <b>Vigilar esta empresa</b>: te avisamos cuando el BORME le publique algo.</p>`;
+
+  $('#cuenta').innerHTML = `
+    <div class="hero">
+      <div class="eyebrow"><span class="bar"></span>Tu cuenta</div>
+      <h1>${esc(c.nombre || c.email)}</h1>
+      <p class="hero-sub">${esc(c.email)}</p>
+      <p><button class="minibtn" data-salir="1">Salir de la cuenta</button></p>
+    </div>
+
+    <h3 class="sec first">Lo que has pedido</h3>
+    ${pedidos}
+
+    <h3 class="sec">Empresas que vigilas</h3>
+    ${vigs}
+
+    <h3 class="sec">Informes</h3>
+    <p class="vacia">Un informe es trabajo nuestro sobre la parte libre y sobre agregados por
+      sector, provincia y tamaño: no es un documento del registro. Dinos qué necesitas saber y te
+      lo presupuestamos. Los que te entreguemos se quedan aquí.</p>
+
+    <h3 class="sec">Qué guardamos de ti</h3>
+    <p class="vacia">El justificante de cada pedido se queda: qué pediste, de qué empresa, cuándo,
+      cuánto y a nombre de quién. <b>El documento del Registro Mercantil no.</b> Se te entrega como
+      adjunto y lo podemos reenviar durante ${c.dias_entrega} días, que es el mismo plazo que da la
+      sede de los registradores; pasado ese plazo hay que volver a pedirlo. No lo incorporamos a
+      ninguna base consultable, porque el §4.4 de las condiciones del registro lo prohíbe, y
+      tampoco lo reutilizamos para el pedido de otro cliente.</p>
+    <p class="vacia">Este navegador recuerda tu sesión y <b>no caduca sola</b>: no te vamos a echar
+      a los noventa días ni a pedirte un código cada vez. Se cierra cuando tú quieres, con
+      <b>Salir de la cuenta</b>, y entonces la sesión se borra también de nuestro lado, no solo de
+      este ordenador. Para volver a entrar, tu correo y seis dígitos.</p>`;
+}
+
+// The entrance. Two steps in one form, and which step it is depends only on
+// whether we have already asked for a code. The email field stays on screen in
+// the second step on purpose: a client who mistyped the address sees it and can
+// correct it without starting over.
+let PASO = null;
+
+function pintarEntrada (error, escrito) {
+  const conCodigo = Boolean(PASO);
+  $('#cuenta').innerHTML = `
+    <div class="hero">
+      <div class="eyebrow"><span class="bar"></span>Tu cuenta</div>
+      <h1>Entra en tu cuenta</h1>
+      <p class="hero-sub">${conCodigo
+        ? `Si <b>${esc(PASO)}</b> tiene algún pedido con nosotros, ya tiene un código de seis dígitos esperando. Vale 15 minutos.`
+        : 'Sin contraseña. Escribe tu correo y te mandamos un código de seis dígitos.'}</p>
+    </div>
+
+    <form class="ped entrada">
+      <label><span>Tu correo</span>
+        <input type="email" name="email" required autocomplete="email" spellcheck="false"
+          value="${esc(PASO || escrito || '')}"></label>
+      ${conCodigo ? `<label><span>Código</span>
+        <input type="text" name="codigo" required inputmode="numeric" autocomplete="one-time-code"
+          maxlength="6" placeholder="------" spellcheck="false"></label>` : ''}
+      ${error ? `<p class="err">${esc(error)}</p>` : ''}
+      <div><button class="solidbtn" type="submit">${conCodigo ? 'Entrar' : 'Mandarme el código'}</button></div>
+    </form>
+
+    <h3 class="sec">Qué abre la cuenta</h3>
+    <p class="vacia">El correo que pusiste en un pedido. La cuenta no se registra ni se da de alta:
+      existe desde el momento en que nos pides algo, y dentro están tus justificantes y las empresas
+      que vigilas. Si no has pedido nada todavía, no hay nada que abrir.</p>`;
+  const campo = $('#cuenta').querySelector(conCodigo ? '[name=codigo]' : '[name=email]');
+  if (campo) campo.focus({ preventScroll: true });
+}
+
+async function abrirCuenta () {
+  $('#pane-list').hidden = true;
+  $('#pane-detail').hidden = true;
+  $('#pane-cuenta').hidden = false;
+  window.scrollTo(0, 0);
+  // Nothing to fetch without a token, and a 404 shown to someone who has not
+  // tried to log in yet would read as a fault instead of as a form.
+  if (!TOKEN) return pintarEntrada();
+  const r = await fetch(API + '/cuenta?t=' + encodeURIComponent(TOKEN || ''));
+  const data = await r.json();
+  if (!r.ok) {
+    // A dead session has to say so where the client is looking, and then put
+    // the way back in right under the sentence instead of leaving them on a
+    // page with a button that no longer opens anything.
+    olvidar();
+    // A 404 now means the session was closed, here or somewhere else, or that
+    // it is one of the old links that still had a date on it.
+    return pintarEntrada(r.status === 404
+      ? 'Esa sesión ya no está abierta. Pide un código y vuelves a entrar.'
+      : (data.error || 'No hemos podido abrir tu cuenta.'));
+  }
+  CUENTA = data;
+  pintarCuenta();
+}
+
+$('#mi-cuenta').addEventListener('click', abrirCuenta);
+
+// One endpoint and one handler for both steps: with no `codigo` it asks for a
+// code, with one it answers the token. The browser is never told whether the
+// address is a client of ours, so the first step always looks the same.
+$('#cuenta').addEventListener('submit', async (ev) => {
+  const f = ev.target.closest('form.entrada');
+  if (!f) return;
+  ev.preventDefault();
+  const btn = f.querySelector('button');
+  const email = f.email.value.trim().toLowerCase();
+  const cuerpo = f.codigo ? { email, codigo: f.codigo.value } : { email };
+  btn.disabled = true;
+  btn.textContent = 'Un momento...';
+  let d = {};
+  let ok = false;
+  try {
+    const r = await fetch(API + '/entrar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cuerpo),
+    });
+    d = await r.json().catch(() => ({}));
+    ok = r.ok;
+  } catch (e) {
+    d = { error: 'No hemos podido conectar. Inténtalo otra vez.' };
+  }
+  // A wrong code must not throw away the step: PASO stays, so the client sees
+  // the same two fields with the mistake named above the button.
+  if (!ok) return pintarEntrada(d.error || 'No hemos podido entrar.', email);
+  if (d.t) { TOKEN = d.t; recordar(d.t); PASO = null; return abrirCuenta(); }
+  PASO = email;
+  pintarEntrada();
+});
+
+$('#cuenta').addEventListener('click', async (ev) => {
+  const ficha_ = ev.target.closest('[data-ficha]');
+  if (ficha_) { ev.preventDefault(); return ficha(ficha_.dataset.ficha); }
+  if (ev.target.closest('[data-salir]')) { salirDeLaCuenta(); return lista(); }
+  const quitar = ev.target.closest('[data-quitar]');
+  if (!quitar) return;
+  quitar.disabled = true;
+  const r = await fetch(API + '/cuenta', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ t: TOKEN, clave: quitar.dataset.quitar, quitar: true }),
+  });
+  const d = await r.json();
+  if (r.ok) { CUENTA.vigilancias = d.vigilancias; pintarCuenta(); } else { quitar.textContent = d.error; }
+});
+
+// A remembered or emailed session lands on the account, which is what the link
+// was sent for. The list is loaded behind it so Volver is instant.
+if (TOKEN) abrirCuenta();
 buscar(false);
 </script>
 </body>

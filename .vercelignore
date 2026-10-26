@@ -2,3 +2,9 @@ build.mjs
 serve.mjs
 node_modules
 .borme-cache
+
+# Drive leaves numbered twins next to every file it touches ("pedir 2.js").
+# An empty one inside api/ aborts the whole deploy: "A Serverless Function has
+# an invalid name ... must not contain any space". The twins are not deleted by
+# hand, because Drive puts them back, so they are ignored here instead.
+* [0-9]*

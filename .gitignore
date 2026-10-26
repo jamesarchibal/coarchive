@@ -1,4 +1,11 @@
 .vercel
 node_modules
-* 2.*
-* 3.*
+
+# Google Drive copies. When Drive loses a race with the editor it empties the
+# real file and parks the content in a numbered twin. The number is not always
+# 2: "package-lock 4.json" and ".vercelignore 2" are both here today, and the
+# second has no extension after the number, so it takes two patterns.
+# Never delete the twins by hand, Drive reconciles them in minutes, but they
+# must never be committed either.
+* [0-9].*
+* [0-9]

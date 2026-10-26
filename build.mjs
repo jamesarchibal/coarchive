@@ -34,11 +34,13 @@
 
 import { DatabaseSync } from 'node:sqlite'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import { existsSync } from 'node:fs'
+import { existsSync, statSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import os from 'node:os'
 import path from 'node:path'
 import { redact } from './redact.mjs'
+import { seccion } from './cnae.mjs'
+import { mascara } from './hechos.mjs'
 
 // `new URL(...).pathname` keeps the %20 of "Mi unidad" and every write fails
 // with EACCES on a path that does not exist. Always decode it.
@@ -70,8 +72,24 @@ CREATE TABLE IF NOT EXISTS empresa (
   comienzo      TEXT,
   objeto        TEXT,
   cnae          TEXT,
+  seccion       TEXT,
   domicilio     TEXT,
   capital       TEXT,
+  capital_eur   INTEGER,
+  -- What has happened to the company, as one bit per event from hechos.mjs.
+  --
+  -- It is a bitmask and not a second table on purpose, and the reason is
+  -- measured. As a table, "the companies that raised capital AND have the
+  -- minimum capital" cost 4.315 ms, because the planner cannot guess how many
+  -- companies an EXISTS over that table will keep, so it chose the wrong half
+  -- of the query to drive and then had to sort the rest. As a column the test
+  -- rides inside the same index as every other filter and the question is
+  -- answered without leaving it. All 55 combinations of event and size band,
+  -- timed through buscar() on the full base 2026-10-22: 10 of them were above
+  -- one second with the table, worst 4.315 ms; with the column none are, worst
+  -- 469 ms, median 20 ms. Vercel kills a Hobby function at 10 s, so this was a
+  -- 504 waiting to happen, not a nicety.
+  hechos        INTEGER NOT NULL DEFAULT 0,
   primer_acto   TEXT,
   ultimo_acto   TEXT,
   n_actos       INTEGER NOT NULL DEFAULT 0,
@@ -99,18 +117,66 @@ CREATE INDEX IF NOT EXISTS acto_fecha  ON acto (fecha);
 CREATE INDEX IF NOT EXISTS emp_prov    ON empresa (provincia);
 CREATE INDEX IF NOT EXISTS emp_estado  ON empresa (estado);
 
--- The three below are for the sort order of the page, not for the filters.
+-- The two below are for the sort order of the page, not for the filters.
 -- Without them the hosted copy answered a plain browse in 10,4 s, because
 -- ORDER BY ultimo_acto had to read and sort all 741k rows; with them it is
 -- 43 ms. Measured on Turso, 2026-10-21. emp_prov_ultimo covers the province
 -- filter plus the sort in one index, which is the most used combination.
-CREATE INDEX IF NOT EXISTS emp_ultimo      ON empresa (ultimo_acto DESC);
+--
+-- ⚠️ THERE IS NO emp_ultimo (ultimo_acto DESC) HERE AND THERE MUST NOT BE. It
+-- existed until 2026-10-23 and it shadowed emp_fecha, which starts with the
+-- same column and carries every filter column inside it. The planner preferred
+-- the short one, so each candidate row had to be fetched from the 1,1 GB table
+-- just to test the filter. Measured on Turso the day the filters went live:
+-- the forty rows of "en concurso" took 5,4 s and its capped count 61,9 s, a
+-- 504 in production; forced onto emp_fecha the same two took 1,1 s and 1,5 s,
+-- and a plain browse went from 2,3 s to 0,3 s. This is the second time a one
+-- column index next to a covering one has cost a day (see emp_tamano below),
+-- and the rule is the same: if a wider index starts with the same column, the
+-- narrow one is not a spare, it is a trap.
 CREATE INDEX IF NOT EXISTS emp_prov_ultimo ON empresa (provincia, ultimo_acto DESC);
 CREATE INDEX IF NOT EXISTS emp_n_actos     ON empresa (n_actos DESC);
 -- A rare legal form has to be found, not scanned for. Filtering by SCP, 13
 -- companies out of 741k, took 2,0 s without this index because every row was
 -- read before the answer came back empty. Measured 2026-10-21.
 CREATE INDEX IF NOT EXISTS emp_forma_ultimo ON empresa (forma, ultimo_acto DESC);
+-- The size filter and the age filter, the two indexes whose shape was measured
+-- instead of guessed. Both carry the OTHER filter columns along, and that is
+-- the whole point of them.
+--
+-- ⚠️ DO NOT shorten either one to a single column. A capital band holds up to
+-- 181.786 companies and a year holds 128.582, so neither range is narrow, and
+-- with a one column index SQLite reads every one of those rows at random
+-- inside a 1,1 GB file just to test the second filter. Carrying the columns
+-- here means the answer never leaves the index. Measured on the full base,
+-- 2026-10-22, through buscar(), rows plus capped count:
+--   constituida en 2024, sector F, capital 3.001 a 60.000   9.150 ms -> 500 ms
+--   sector J, capital 60.001 a 300.000                      2.496 ms -> 216 ms
+--   capital de más de 3.000.000 y constituida en 2025        4.128 ms ->  94 ms
+-- ⚠️ And a one column index must not even EXIST next to these: while
+-- emp_capital(capital_eur) and emp_comienzo(comienzo) were still there, the
+-- planner preferred them and the queries stayed at seconds.
+--
+-- ⚠️ The age index is on comienzo, the real date of incorporation read from
+-- inside the act, not on constitucion, which is only the publication day.
+-- (No backticks in here: this whole schema is one template literal, and a
+-- backtick in a comment ends the string and breaks the file.)
+-- That is the column the year filter asks for.
+CREATE INDEX IF NOT EXISTS emp_tamano ON empresa
+  (capital_eur, seccion, comienzo, hechos, provincia, forma, estado, ultimo_acto);
+CREATE INDEX IF NOT EXISTS emp_anio ON empresa
+  (comienzo, capital_eur, seccion, hechos, provincia, forma, estado, ultimo_acto);
+CREATE INDEX IF NOT EXISTS emp_cnae    ON empresa (cnae);
+CREATE INDEX IF NOT EXISTS emp_seccion ON empresa (seccion, ultimo_acto DESC);
+-- The same columns again, led by the date this time, because the page always
+-- asks for the forty newest and two wide filters at once leave the planner
+-- nothing else to stand on: it would read every matching row and sort the lot.
+-- Led by ultimo_acto it walks the base newest first and stops at the fortieth
+-- hit. Measured on the full base 2026-10-22, "cambió de domicilio" with
+-- "capital mínimo", 56.000 companies between them: 7.615 ms without this index
+-- and 33 ms with it.
+CREATE INDEX IF NOT EXISTS emp_fecha ON empresa
+  (ultimo_acto DESC, capital_eur, seccion, comienzo, hechos, provincia, forma, estado);
 
 CREATE VIRTUAL TABLE IF NOT EXISTS empresa_fts USING fts5 (
   nombre, objeto, clave UNINDEXED, tokenize = "unicode61 remove_diacritics 2"
@@ -209,6 +275,20 @@ function capital (texto) {
   return (v.match(/^[\d.,]+\s*(?:Euros?|Ptas?\.?|Pesetas)/i) || [v])[0]
 }
 
+// A size filter needs a number, and `capital` is a sentence. Two traps, both
+// real in this base: the figure is in Spanish format (44.500,00 is forty four
+// thousand, not forty four) so a plain Number() gives 44; and some old acts
+// still publish Pesetas, so comparing them against Euros would put a 500.000
+// Ptas company (3.005 EUR) above a 100.000 EUR one. A Peseta figure returns
+// null rather than a converted guess: the act does not say what the capital is
+// in euros today, and a filter must not invent the number it filters on.
+function capitalEur (v) {
+  if (!v || !/Euros?/i.test(v)) return null
+  const cifra = (v.match(/^[\d.,]+/) || [''])[0].replace(/\./g, '').replace(',', '.')
+  const n = Number(cifra)
+  return Number.isFinite(n) && n > 0 ? Math.round(n) : null
+}
+
 // The date BORME prints as the act date is the PUBLICATION date, which runs a
 // few weeks behind. The real incorporation date is inside the Constitucion act
 // as `Comienzo de operaciones: 4.02.25`. Verified against a bought XBRL deposit
@@ -269,7 +349,12 @@ const CONCURSO = /\bconcurs/i
 // ─────────────────────────────────────────────────────────────────────────────
 async function getCached (url, key) {
   const file = path.join(CACHE, key)
-  if (existsSync(file)) return readFile(file, 'utf8')
+  // A zero byte cache entry is a MISS, not a hit. The cache sits in Google
+  // Drive, and Drive empties files it is syncing: on 2026-10-22 it had gutted
+  // 47 of the 16.047 entries, and the build died at day 200 of 732 on a
+  // sumario that parsed as empty JSON. Refetching one file costs a request;
+  // trusting it costs the whole run.
+  if (existsSync(file) && statSync(file).size > 0) return readFile(file, 'utf8')
   const res = await fetch(url, {
     headers: { Accept: 'application/json, application/xml;q=0.9', 'User-Agent': 'joblanders-mercantil/1' },
   })
@@ -349,14 +434,17 @@ function ingestDay (db, stmts, iso, docs) {
 
         const esConstitucion = labels.some((l) => /^Constituci/i.test(l))
         const estado = MUERTE.test(limpio) ? 'extinguida' : CONCURSO.test(limpio) ? 'concurso' : null
+        const cap = capital(e.texto)
+        const cod = cnae(e.texto)
 
         stmts.empresa.run(
           rk.clave, e.nombre, e.provincia, rk.hoja, forma(e.nombre),
           esConstitucion ? fecha : null, comienzo(e.texto),
-          objetoSocial(e.texto), cnae(e.texto),
-          campo(e.texto, 'Domicilio'), capital(e.texto),
-          fecha, fecha, estado,
+          objetoSocial(e.texto), cod, seccion(cod),
+          campo(e.texto, 'Domicilio'), cap, capitalEur(cap),
+          mascara(labels), fecha, fecha, estado,
         )
+
       }
     }
     stmts.dia.run(iso, docs.length, actos, new Date().toISOString())
@@ -376,9 +464,9 @@ function prepare (db) {
     // objeto). Last write wins for the denomination, because a company that
     // changes its name should be found under the current one.
     empresa: db.prepare(`
-      INSERT INTO empresa (clave, nombre, provincia, hoja, forma, constitucion, comienzo, objeto, cnae,
-                           domicilio, capital, primer_acto, ultimo_acto, n_actos, estado)
-      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,1,COALESCE(?,'activa'))
+      INSERT INTO empresa (clave, nombre, provincia, hoja, forma, constitucion, comienzo, objeto, cnae, seccion,
+                           domicilio, capital, capital_eur, hechos, primer_acto, ultimo_acto, n_actos, estado)
+      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,1,COALESCE(?,'activa'))
       ON CONFLICT(clave) DO UPDATE SET
         nombre       = CASE WHEN excluded.ultimo_acto >= empresa.ultimo_acto THEN excluded.nombre ELSE empresa.nombre END,
         forma        = COALESCE(empresa.forma, excluded.forma),
@@ -386,8 +474,18 @@ function prepare (db) {
         comienzo     = COALESCE(empresa.comienzo, excluded.comienzo),
         objeto       = COALESCE(excluded.objeto, empresa.objeto),
         cnae         = COALESCE(excluded.cnae, empresa.cnae),
+        seccion      = COALESCE(excluded.seccion, empresa.seccion),
         domicilio    = COALESCE(excluded.domicilio, empresa.domicilio),
-        capital      = COALESCE(excluded.capital, empresa.capital),
+        -- capital and capital_eur must move together or the figure stops
+        -- matching the text next to it. A Peseta capital parses to a null
+        -- capital_eur on purpose, so this cannot be a COALESCE: it has to
+        -- follow whether the new act published a capital at all.
+        capital      = CASE WHEN excluded.capital IS NOT NULL THEN excluded.capital     ELSE empresa.capital     END,
+        capital_eur  = CASE WHEN excluded.capital IS NOT NULL THEN excluded.capital_eur ELSE empresa.capital_eur END,
+        -- Events accumulate: a company that raised capital in March and moved
+        -- in July has both bits, for ever. This is the only column that is
+        -- neither first write nor last write wins.
+        hechos       = empresa.hechos | excluded.hechos,
         primer_acto  = MIN(empresa.primer_acto, excluded.primer_acto),
         ultimo_acto  = MAX(empresa.ultimo_acto, excluded.ultimo_acto),
         n_actos      = empresa.n_actos + 1,

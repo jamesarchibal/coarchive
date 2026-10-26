@@ -18,13 +18,14 @@
 
 import { createServer } from 'node:http'
 
-import { buscar, empresa } from './queries.mjs'
-import { crear, pedidosClient } from './pedidos.mjs'
-import { localClient, plantilla } from './publish.mjs'
+import { buscar, empresa, entrada, localClient } from './queries.mjs'
+import { canjear, crear, cuenta, desvigilar, pedidosClient, pedirCodigo, salir, vigilar } from './pedidos.mjs'
+import { plantilla } from './publish.mjs'
 
 const PORT = Number(process.argv[process.argv.indexOf('--port') + 1]) || 8806
 const db = localClient()
 const pedidos = pedidosClient()
+let resumenCache
 
 const cuerpo = (req) => new Promise((resolve, reject) => {
   let s = ''
@@ -57,21 +58,62 @@ createServer(async (req, res) => {
         return res.end(JSON.stringify({ error: err.message }))
       }
     }
+    // Mirrors api/entrar.js. Here the code is not mailed anywhere: correo.mjs
+    // prints it in this terminal when there is no RESEND_API_KEY, which is how
+    // the whole circuit is testable on this machine without an account.
+    if (url.pathname === '/api/entrar') {
+      if (req.method !== 'POST') { res.writeHead(405); return res.end('usa POST') }
+      try {
+        const b = await cuerpo(req)
+        if (b.codigo) {
+          const a = await canjear(pedidos, b.email, b.codigo)
+          return json(res, { t: a.token, email: a.email })
+        }
+        const r = await pedirCodigo(pedidos, b.email)
+        return json(res, { enviado: r.enviado })
+      } catch (err) {
+        if (!err?.cliente) throw err
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' })
+        return res.end(JSON.stringify({ error: err.message }))
+      }
+    }
+    // Mirrors api/cuenta.js, both methods, including the 404 for a dead token.
+    if (url.pathname === '/api/cuenta') {
+      try {
+        if (req.method === 'POST') {
+          const b = await cuerpo(req)
+          if (b.salir) { await salir(pedidos, b.t); return json(res, { fuera: true }) }
+          const vigilancias = b.quitar
+            ? await desvigilar(pedidos, b.t, b.clave)
+            : await vigilar(pedidos, db, b.t, b.clave)
+          return json(res, { vigilancias })
+        }
+        const c = await cuenta(pedidos, p.get('t') || '')
+        if (!c) {
+          res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' })
+          return res.end(JSON.stringify({ error: 'Ese enlace ya no vale. Pídenos uno nuevo.' }))
+        }
+        return json(res, c)
+      } catch (err) {
+        if (!err?.cliente) throw err
+        res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' })
+        return res.end(JSON.stringify({ error: err.message }))
+      }
+    }
     if (url.pathname === '/api/buscar') {
-      return json(res, await buscar(db, {
-        q: p.get('q') || '',
-        provincia: p.get('provincia') || '',
-        forma: p.get('forma') || '',
-        estado: p.get('estado') || '',
-        page: Number(p.get('page')) || 1,
-      }))
+      return json(res, await buscar(db, entrada((k) => p.get(k))))
     }
     if (url.pathname === '/api/empresa') {
       const e = await empresa(db, p.get('clave') || '')
       if (!e) { res.writeHead(404); return res.end('no existe') }
       return json(res, e)
     }
-    const { html } = await plantilla(db)
+    // The resumen is counted once per process, the HTML is rebuilt every time.
+    // See plantilla() for why that is safe. ⚠️ The consequence: a change to
+    // queries.mjs, to build.mjs or to the database file needs a restart, while
+    // a change to index.html does not.
+    if (!resumenCache) resumenCache = (await plantilla(db)).resumen
+    const { html } = await plantilla(db, resumenCache)
     res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' })
     res.end(html)
   } catch (err) {
